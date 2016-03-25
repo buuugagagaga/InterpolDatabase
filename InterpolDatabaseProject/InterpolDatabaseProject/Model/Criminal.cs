@@ -6,92 +6,30 @@ using System.Threading.Tasks;
 
 namespace InterpolDatabaseProject.Model
 {
+    /*
+        Данные по каждому зарегистрированному преступнику: фамилия, имя, кличка, рост, цвет волос и глаз, особые приметы, гражданство, 
+        место и дата рождения, последнее место жительства, знание языков, преступная профессия, последнее дело и так далее. 
+        Преступные и мафиозные группировки (данные о подельщиках). 
+    */
+
     class Сriminal
     {
-        private ushort eyeColorId;
-        private ushort hairColorId;
-        private ushort nationalityId;
-        private ushort citizenshipId;
-
-        static Сriminal()
-        {
-            EyeColors = new Dictionary<int, string>();
-            EyeColors.Add(0, "Unknown");
-            HairColors = new Dictionary<int, string>();
-            HairColors.Add(0, "Unknown");
-            Countries = new Dictionary<int, string>();
-            Countries.Add(0, "Unknown");
-
-        }
-
-        public static Dictionary<int, string> EyeColors { get; set; }
-        public static Dictionary<int, string> HairColors { get; set; }
-        public static Dictionary<int, string> Countries { get; set; }
-
         public string Lastname { get; set; }
         public string Forenames { get; set; }
         public string CodeName { get; set; }
         public ushort Height { get; set; }
-        public ushort EyeColorId
-        {
-            get
-            {
-                return eyeColorId;
-            }
-            set
-            {
-                if (EyeColors.ContainsKey(value))
-                    eyeColorId = value;
-                else throw new ArgumentOutOfRangeException();
-            }
-        }
-        public ushort HairColorId
-        {
-            get
-            {
-                return hairColorId;
-            }
-            set
-            {
-                if (HairColors.ContainsKey(value))
-                    hairColorId = value;
-                else throw new ArgumentOutOfRangeException();
-            }
-        }
+        public EyeColor ColorOfEye { get; set; }
+        public HairColor ColorOfHair { get; set; }
         public SexOptions Sex { get; set; }
         public List<string> SpecialSigns { get; set; }
-        public ushort NationalityId
-        {
-            get
-            {
-                return nationalityId;
-            }
-            set
-            {
-                if (Countries.ContainsKey(value))
-                    nationalityId = value;
-                else throw new ArgumentOutOfRangeException();
-
-            }
-        }
-        public ushort CitizenshipId
-        {
-            get
-            {
-                return citizenshipId;
-            }
-            set
-            {
-                if (Countries.ContainsKey(value))
-                    citizenshipId = value;
-                else throw new ArgumentOutOfRangeException();
-
-            }
-        }
+        public Country Nationality { get; set; }
+        public Country Citizenship { get; set; }
         public string Birthplace { get; set; }
         public DateTime Birthdate { get; set; }
         public string LastLivingPlace { get; set; }
-        public List<Language> Languages { set; get; }
+        public List<Language> Languages { get; set; }
+        public string CriminalProfession { get; set; }
+        public CriminalGroup CriminalGroupMembership { get; set; }
 
         public enum SexOptions
         {
@@ -99,39 +37,134 @@ namespace InterpolDatabaseProject.Model
             Female,
             Unknown
         }
-
         public class Language
         {
-            private int languageId;
+            private int id;
 
             static Language()
             {
                 Languages = new Dictionary<int, string>();
-                Languages.Add(0, "English");
             }
 
             public static Dictionary<int, string> Languages { get; set; }
-            public int LanguageId
+            public int Id
             {
                 get
                 {
-                    return languageId;
+                    return id;
                 }
                 set
                 {
                     if (Languages.ContainsKey(value))
-                        languageId = value;
+                        id = value;
                     else throw new ArgumentOutOfRangeException();
                 }
             }
-            public LanguageKnowledgeLevel KnowledgeLevel { get; set; }
-            
-            public enum LanguageKnowledgeLevel
+
+        }
+        public class Country
+        {
+            private int id;
+
+            static Country()
             {
-                Fluent,
-                Middle,
-                Low
+                Countries = new Dictionary<int, string>();
+                Countries.Add(0, "Unknown");
             }
+
+            public static Dictionary<int, string> Countries { get; set; }
+            public int Id
+            {
+                get
+                {
+                    return id;
+                }
+                set
+                {
+                    if (Countries.ContainsKey(value))
+                        id = value;
+                    else throw new ArgumentOutOfRangeException();
+                }
+            }
+
+        }
+        public class HairColor
+        {
+            private int id;
+
+            static HairColor()
+            {
+                HairColors = new Dictionary<int, string>();
+                HairColors.Add(0, "Unknown");
+            }
+
+            public static Dictionary<int, string> HairColors { get; set; }
+            public int Id
+            {
+                get
+                {
+                    return id;
+                }
+                set
+                {
+                    if (HairColors.ContainsKey(value))
+                        id = value;
+                    else throw new ArgumentOutOfRangeException();
+                }
+            }
+
+        }
+        public class EyeColor
+        {
+            private int id;
+
+            static EyeColor()
+            {
+                EyeColors = new Dictionary<int, string>();
+                EyeColors.Add(0, "Unknown");
+            }
+
+            public static Dictionary<int, string> EyeColors { get; set; }
+            public int Id
+            {
+                get
+                {
+                    return id;
+                }
+                set
+                {
+                    if (EyeColors.ContainsKey(value))
+                        id = value;
+                    else throw new ArgumentOutOfRangeException();
+                }
+            }
+
+        }
+        public class CriminalGroup
+        {
+            private int id;
+
+            static CriminalGroup()
+            {
+                CriminalGroups = new Dictionary<int, string>();
+                CriminalGroups.Add(0, "Unknown");
+            }
+
+            public static Dictionary<int, string> CriminalGroups { get; set; }
+            public int Id
+            {
+                get
+                {
+                    return id;
+                }
+                set
+                {
+                    if (CriminalGroups.ContainsKey(value))
+                        id = value;
+                    else throw new ArgumentOutOfRangeException();
+                }
+            }
+
         }
 
     }
