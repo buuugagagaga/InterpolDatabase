@@ -69,7 +69,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Country.cs" />
+    <Compile Include="Model\Crime.cs" />
     <Compile Include="Model\Criminal.cs" />
+    <Compile Include="Model\CriminalGroup.cs" />
+    <Compile Include="Model\Database.cs" />
+    <Compile Include="Model\EyeColor.cs" />
+    <Compile Include="Model\HairColor.cs" />
+    <Compile Include="Model\Language.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
