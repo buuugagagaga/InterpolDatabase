@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 namespace InterpolDatabaseProject.Model
 {
@@ -10,7 +13,12 @@ namespace InterpolDatabaseProject.Model
 
         static Country()
         {
-            Countries = new Dictionary<int, string> {{0, "Unknown"}};
+            Countries = new List<string> { "Unknown" };
+            XmlSerializer xs = new XmlSerializer(typeof(List<string>));
+            using (Stream stream = new FileStream("Storage/AdditionalData/countries.dat", FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+                Countries = (List<string>) xs.Deserialize(stream);
+            }
         }
 
         public Country(int id):this()
@@ -18,7 +26,7 @@ namespace InterpolDatabaseProject.Model
             Id = id;
         }
 
-        public static Dictionary<int, string> Countries { get; set; }
+        public static List<string> Countries { get; set; }
         public int Id
         {
             get
@@ -27,7 +35,7 @@ namespace InterpolDatabaseProject.Model
             }
             set
             {
-                if (Countries.ContainsKey(value))
+                if (value>-1 && value < Countries.Count)
                     _id = value;
                 else throw new ArgumentOutOfRangeException();
             }

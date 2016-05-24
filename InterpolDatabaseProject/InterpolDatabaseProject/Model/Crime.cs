@@ -28,6 +28,7 @@ namespace InterpolDatabaseProject.Model
             AdditionalData = additionalData;
         }
 
+        [Serializable]
         public struct CrimeType
         {
             private int _id;
