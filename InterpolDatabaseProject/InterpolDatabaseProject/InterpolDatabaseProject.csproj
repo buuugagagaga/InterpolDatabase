@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\Criminal.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -71,7 +72,6 @@
   <ItemGroup>
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\Crime.cs" />
-    <Compile Include="Model\Criminal.cs" />
     <Compile Include="Model\CriminalGroup.cs" />
     <Compile Include="Model\Database.cs" />
     <Compile Include="Model\EyeColor.cs" />

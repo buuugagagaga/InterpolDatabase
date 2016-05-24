@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InterpolDatabaseProject.Model
 {
+    [Serializable]
     public struct Language
     {
         private int _id;
@@ -33,5 +31,9 @@ namespace InterpolDatabaseProject.Model
             }
         }
 
+        public override string ToString()
+        {
+            return Languages[Id];
+        }
     }
 }

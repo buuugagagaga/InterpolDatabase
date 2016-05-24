@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InterpolDatabaseProject.Model
 {
+    [Serializable]
     public struct EyeColor
     {
         private int _id;

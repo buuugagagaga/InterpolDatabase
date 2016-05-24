@@ -1,14 +1,11 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 
 namespace InterpolDatabaseProject.Model
 {
-    class Crime
+    [Serializable]
+    public class Crime
     {
-        public int Id { set; get; }
-
         public CrimeType Type { get; set; }
         public DateTime Date { get; set; }
         public Country CommitmentCountry { get; set; }
@@ -17,15 +14,13 @@ namespace InterpolDatabaseProject.Model
 
         public Crime()
         {
-            Id = -1;
             Type = new CrimeType(0);
             CommitmentCountry = new Country(0);
             CommitmentPlace = "Unknown";
             AdditionalData = "No data";
         }
-        public Crime(int id, CrimeType type, DateTime date, Country commitmentCountry, string commitmentPlace, string additionalData)
+        public Crime(CrimeType type, DateTime date, Country commitmentCountry, string commitmentPlace, string additionalData)
         {
-            Id = id;
             Type = type;
             Date = date;
             CommitmentCountry = commitmentCountry;

@@ -3,16 +3,9 @@ using System.Collections.Generic;
 
 namespace InterpolDatabaseProject.Model
 {
-    /*
-        Данные по каждому зарегистрированному преступнику: фамилия, имя, кличка, рост, цвет волос и глаз, особые приметы, гражданство, 
-        место и дата рождения, последнее место жительства, знание языков, преступная профессия, последнее дело и так далее. 
-        Преступные и мафиозные группировки (данные о подельщиках). 
-    */
-
-    class Сriminal
+    [Serializable]
+    public class Сriminal
     {
-        public int Id { set; get; }
-
         public string Lastname { get; set; }
         public string Forename { get; set; }
         public string CodeName { get; set; }
@@ -33,7 +26,6 @@ namespace InterpolDatabaseProject.Model
 
         public Сriminal()
         {
-            Id = -1;
             Lastname = "Unknown";
             Forename = "Unknown";
             CodeName = "Unknown";
@@ -49,9 +41,8 @@ namespace InterpolDatabaseProject.Model
             LastLivingPlace = "Unknown";
             Languages = new List<Language>();
         }
-        public Сriminal(int id, string lastname, string forename, string codeName, ushort height, EyeColor colorOfEye, HairColor colorOfHair, SexOptions sex, List<string> specialSigns, Country citizenship, Country birthCountry, string birthplace, DateTime birthdate, Country lastLivingCountry, string lastLivingPlace, List<Language> languages, List<Crime> crimes, CriminalGroup criminalGroupMembership)
+        public Сriminal(string lastname, string forename, string codeName, ushort height, EyeColor colorOfEye, HairColor colorOfHair, SexOptions sex, List<string> specialSigns, Country citizenship, Country birthCountry, string birthplace, DateTime birthdate, Country lastLivingCountry, string lastLivingPlace, List<Language> languages)
         {
-            Id = id;
             Lastname = lastname;
             Forename = forename;
             CodeName = codeName;
