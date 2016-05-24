@@ -43,5 +43,13 @@ namespace InterpolDatabaseProject.Model
         {
             return EyeColors[Id];
         }
+        public static bool operator ==(EyeColor e1, EyeColor e2)
+        {
+            return e1.Id == e2.Id;
+        }
+        public static bool operator !=(EyeColor e1, EyeColor e2)
+        {
+            return e1.Id != e2.Id;
+        }
     }
 }

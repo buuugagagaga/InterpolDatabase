@@ -104,6 +104,11 @@ namespace InterpolDatabaseProject.Model
         {
             _criminals[id] = criminal;
         }
+        public static void ChangeCriminalState(int criminalId, Сriminal.CriminalStateOptions state)
+        {
+            if (!_criminals.ContainsKey(criminalId)) throw new ArgumentOutOfRangeException();
+            _criminals[criminalId].State = state;
+        }
         #endregion
         #region _crimes Methods
         public static void AddCrime(Crime crime)
@@ -214,5 +219,6 @@ namespace InterpolDatabaseProject.Model
         }
         #endregion
         #endregion
+
     }
 }

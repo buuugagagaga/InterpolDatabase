@@ -43,5 +43,13 @@ namespace InterpolDatabaseProject.Model
         {
             return HairColors[Id];
         }
+        public static bool operator ==(HairColor h1, HairColor h2)
+        {
+            return h1.Id == h2.Id;
+        }
+        public static bool operator !=(HairColor h1, HairColor h2)
+        {
+            return h1.Id != h2.Id;
+        }
     }
 }

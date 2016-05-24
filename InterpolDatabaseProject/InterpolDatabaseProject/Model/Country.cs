@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 
 namespace InterpolDatabaseProject.Model
@@ -27,6 +26,7 @@ namespace InterpolDatabaseProject.Model
         }
 
         public static List<string> Countries { get; set; }
+
         public int Id
         {
             get

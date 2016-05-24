@@ -35,5 +35,14 @@ namespace InterpolDatabaseProject.Model
         {
             return Languages[Id];
         }
+
+        public static bool operator ==(Language l1, Language l2)
+        {
+            return l1.Id == l2.Id;
+        }
+        public static bool operator !=(Language l1, Language l2)
+        {
+            return l1.Id != l2.Id;
+        }
     }
 }

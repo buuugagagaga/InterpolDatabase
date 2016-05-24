@@ -6,6 +6,7 @@ namespace InterpolDatabaseProject.Model
     [Serializable]
     public class Сriminal
     {
+        #region Properies
         public string Lastname { get; set; }
         public string Forename { get; set; }
         public string CodeName { get; set; }
@@ -24,6 +25,9 @@ namespace InterpolDatabaseProject.Model
         public string LastLivingPlace { get; set; }
         public List<Language> Languages { get; set; }
 
+        public CriminalStateOptions State { get; set; }
+        #endregion
+
         public Сriminal()
         {
             Lastname = "Unknown";
@@ -40,8 +44,13 @@ namespace InterpolDatabaseProject.Model
             LastLivingCountry = new Country(0);
             LastLivingPlace = "Unknown";
             Languages = new List<Language>();
+            State = CriminalStateOptions.Wanted;
         }
-        public Сriminal(string lastname, string forename, string codeName, ushort height, EyeColor colorOfEye, HairColor colorOfHair, SexOptions sex, List<string> specialSigns, Country citizenship, Country birthCountry, string birthplace, DateTime birthdate, Country lastLivingCountry, string lastLivingPlace, List<Language> languages)
+        public Сriminal(string lastname, string forename, string codeName, ushort height, 
+            EyeColor colorOfEye, HairColor colorOfHair, SexOptions sex, List<string> specialSigns,
+            Country citizenship, Country birthCountry, string birthplace, DateTime birthdate, 
+            Country lastLivingCountry, string lastLivingPlace, List<Language> languages, 
+            CriminalStateOptions state)
         {
             Lastname = lastname;
             Forename = forename;
@@ -58,13 +67,22 @@ namespace InterpolDatabaseProject.Model
             LastLivingCountry = lastLivingCountry;
             LastLivingPlace = lastLivingPlace;
             Languages = languages;
+            State = state;
         }
 
+        #region Enums
         public enum SexOptions
         {
             Male,
             Female,
             Unknown
         }
+        public enum CriminalStateOptions
+        {
+            Wanted,
+            Busted,
+            Wasted
+        }
+        #endregion
     }
 }
