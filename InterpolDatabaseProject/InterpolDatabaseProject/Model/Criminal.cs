@@ -49,8 +49,7 @@ namespace InterpolDatabaseProject.Model
         public Сriminal(string lastname, string forename, string codeName, ushort height, 
             EyeColor colorOfEye, HairColor colorOfHair, SexOptions sex, List<string> specialSigns,
             Country citizenship, Country birthCountry, string birthplace, DateTime birthdate, 
-            Country lastLivingCountry, string lastLivingPlace, List<Language> languages, 
-            CriminalStateOptions state)
+            Country lastLivingCountry, string lastLivingPlace, List<Language> languages)
         {
             Lastname = lastname;
             Forename = forename;
@@ -67,7 +66,7 @@ namespace InterpolDatabaseProject.Model
             LastLivingCountry = lastLivingCountry;
             LastLivingPlace = lastLivingPlace;
             Languages = languages;
-            State = state;
+            State = CriminalStateOptions.Wanted;
         }
 
         #region Enums

@@ -14,7 +14,7 @@ namespace InterpolDatabaseProject.Model
         {
             EyeColors = new List<string> { "Unknown" };
             XmlSerializer xs = new XmlSerializer(typeof(List<string>));
-            using (Stream stream = new FileStream("Storage/AdditionalData/eyecolors.dat", FileMode.Open, FileAccess.Read, FileShare.None))
+            using (Stream stream = new FileStream("..\\..\\Storage\\AdditionalData\\eyecolors.dat", FileMode.Open, FileAccess.Read, FileShare.None))
             {
                 EyeColors = (List<string>)xs.Deserialize(stream);
             }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace InterpolDatabaseProject.Model
 {
@@ -10,13 +12,18 @@ namespace InterpolDatabaseProject.Model
 
         static Language()
         {
-            Languages = new Dictionary<int, string> { { 0, "Unknown" } };
+            Languages = new List<string> { "Unknown" };
+            XmlSerializer xs = new XmlSerializer(typeof(List<string>));
+            using (Stream stream = new FileStream("..\\..\\Storage\\AdditionalData\\languages.dat", FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+                Languages = (List<string>)xs.Deserialize(stream);
+            }
         }
         public Language(int id):this()
         {
             Id = id;
         }
-        public static Dictionary<int, string> Languages { get; set; }
+        public static List<string> Languages { get; set; }
         public int Id
         {
             get
@@ -25,7 +32,7 @@ namespace InterpolDatabaseProject.Model
             }
             set
             {
-                if (Languages.ContainsKey(value))
+                if (value >= 0 && value < Languages.Count)
                     _id = value;
                 else throw new ArgumentOutOfRangeException();
             }

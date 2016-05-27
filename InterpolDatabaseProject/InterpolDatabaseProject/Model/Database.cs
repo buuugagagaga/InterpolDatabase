@@ -10,9 +10,9 @@ namespace InterpolDatabaseProject.Model
     public static class Database
     {
         #region private
-        private static Dictionary<int, Сriminal> _criminals = new Dictionary<int, Сriminal> { {-1,null} };
-        private static Dictionary<int, Crime> _crimes = new Dictionary<int, Crime> { { -1, null } };
-        private static Dictionary<int, CriminalGroup> _criminalGroups = new Dictionary<int, CriminalGroup> { { -1, null } };
+        private static Dictionary<int, Сriminal> _criminals = new Dictionary<int, Сriminal>();
+        private static Dictionary<int, Crime> _crimes = new Dictionary<int, Crime>();
+        private static Dictionary<int, CriminalGroup> _criminalGroups = new Dictionary<int, CriminalGroup>();
         private static Dictionary<int, List<int>> _criminalsToCrimes = new Dictionary<int, List<int>>();
         private static Dictionary<int, List<int>> _criminalsToCriminalGroups = new Dictionary<int, List<int>>();
         private static Dictionary<int, List<string>> _criminalsToPhotos = new Dictionary<int, List<string>>();
@@ -27,33 +27,33 @@ namespace InterpolDatabaseProject.Model
         #endregion
         static Database()
         {
-
+            RestoreData();
         }
         #region Serialization
         public static void SaveData()
         {
             BinaryFormatter binFormat = new BinaryFormatter();
-            using (Stream stream = new FileStream("Storage/Data/criminals.dat", FileMode.Create, FileAccess.Write, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/criminals.dat", FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 binFormat.Serialize(stream, _criminals);
             }
-            using (Stream stream = new FileStream("Storage/Data/crimes.dat", FileMode.Create, FileAccess.Write, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/crimes.dat", FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 binFormat.Serialize(stream, _crimes);
             }
-            using (Stream stream = new FileStream("Storage/Data/criminalGroups.dat", FileMode.Create, FileAccess.Write, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/criminalGroups.dat", FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 binFormat.Serialize(stream, _criminalGroups);
             }
-            using (Stream stream = new FileStream("Storage/Data/criminalsToCrimes.dat", FileMode.Create, FileAccess.Write, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/criminalsToCrimes.dat", FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 binFormat.Serialize(stream, _criminalsToCrimes);
             }
-            using (Stream stream = new FileStream("Storage/Data/criminalsToCriminalGroups.dat", FileMode.Create, FileAccess.Write, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/criminalsToCriminalGroups.dat", FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 binFormat.Serialize(stream, _criminalsToCriminalGroups);
             }
-            using (Stream stream = new FileStream("Storage/Data/criminalsToPhotos.dat", FileMode.Create, FileAccess.Write, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/criminalsToPhotos.dat", FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 binFormat.Serialize(stream, _criminalsToPhotos);
             }
@@ -61,27 +61,27 @@ namespace InterpolDatabaseProject.Model
         public static void RestoreData()
         {
             BinaryFormatter binFormat = new BinaryFormatter();
-            using (Stream stream = new FileStream("Storage/Data/criminals.dat", FileMode.Open, FileAccess.Read, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/criminals.dat", FileMode.Open, FileAccess.Read, FileShare.None))
             {
                 _criminals = (Dictionary<int, Сriminal>) binFormat.Deserialize(stream);
             }
-            using (Stream stream = new FileStream("Storage/Data/crimes.dat", FileMode.Open, FileAccess.Read, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/crimes.dat", FileMode.Open, FileAccess.Read, FileShare.None))
             {
                 _crimes = (Dictionary<int, Crime>)binFormat.Deserialize(stream);
             }
-            using (Stream stream = new FileStream("Storage/Data/criminalGroups.dat", FileMode.Open, FileAccess.Read, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/criminalGroups.dat", FileMode.Open, FileAccess.Read, FileShare.None))
             {
                 _criminalGroups = (Dictionary<int, CriminalGroup>)binFormat.Deserialize(stream);
             }
-            using (Stream stream = new FileStream("Storage/Data/criminalsToCrimes.dat", FileMode.Open, FileAccess.Read, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/criminalsToCrimes.dat", FileMode.Open, FileAccess.Read, FileShare.None))
             {
                 _criminalsToCrimes = (Dictionary<int, List<int>>)binFormat.Deserialize(stream);
             }
-            using (Stream stream = new FileStream("Storage/Data/criminalsToCriminalGroups.dat", FileMode.Open, FileAccess.Read, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/criminalsToCriminalGroups.dat", FileMode.Open, FileAccess.Read, FileShare.None))
             {
                 _criminalsToCriminalGroups = (Dictionary<int, List<int>>)binFormat.Deserialize(stream);
             }
-            using (Stream stream = new FileStream("Storage/Data/criminalsToPhotos.dat", FileMode.Open, FileAccess.Read, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/criminalsToPhotos.dat", FileMode.Open, FileAccess.Read, FileShare.None))
             {
                 _criminalsToPhotos = (Dictionary<int, List<string>>)binFormat.Deserialize(stream);
             }
@@ -91,7 +91,9 @@ namespace InterpolDatabaseProject.Model
         #region _criminals Methods
         public static void AddCriminal(Сriminal criminal)
         {
-            _criminals.Add(_criminals.Keys.Last()+1, criminal);
+            if(_criminals.Keys.Count==0)
+                _criminals.Add(0, criminal);
+            else _criminals.Add(_criminals.Keys.Last() + 1, criminal);
         }
         public static void RemoveCriminal(int id)
         {
@@ -113,7 +115,9 @@ namespace InterpolDatabaseProject.Model
         #region _crimes Methods
         public static void AddCrime(Crime crime)
         {
-            _crimes.Add(_crimes.Keys.Last()+1, crime);
+            if (_crimes.Keys.Count == 0)
+                _crimes.Add(0, crime);
+            else _crimes.Add(_crimes.Keys.Last() + 1, crime);
         }
         public static void RemoveCrime(int id)
         {
@@ -132,7 +136,9 @@ namespace InterpolDatabaseProject.Model
         #region _criminalGroups Methods
         public static void AddCriminalGroup(CriminalGroup criminalGroup)
         {
-            _criminalGroups.Add(_criminalGroups.Keys.Last() + 1, criminalGroup);
+            if (_criminalGroups.Keys.Count == 0)
+                _criminalGroups.Add(0, criminalGroup);
+            else _criminalGroups.Add(_criminalGroups.Keys.Last() + 1, criminalGroup);
         }
         public static void RemoveCriminalGroup(int id)
         {

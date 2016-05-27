@@ -14,7 +14,7 @@ namespace InterpolDatabaseProject.Model
         {
             HairColors = new List<string> { "Unknown" };
             XmlSerializer xs = new XmlSerializer(typeof(List<string>));
-            using (Stream stream = new FileStream("Storage/AdditionalData/haircolors.dat", FileMode.Open, FileAccess.Read, FileShare.None))
+            using (Stream stream = new FileStream("..\\..\\Storage\\AdditionalData\\haircolors.dat", FileMode.Open, FileAccess.Read, FileShare.None))
             {
                 HairColors = (List<string>)xs.Deserialize(stream);
             }
@@ -33,7 +33,7 @@ namespace InterpolDatabaseProject.Model
             }
             set
             {
-                if (value>0 && value<HairColors.Count)
+                if (value>=0 && value<HairColors.Count)
                     _id = value;
                 else throw new ArgumentOutOfRangeException();
             }
