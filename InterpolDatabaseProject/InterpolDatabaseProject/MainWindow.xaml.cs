@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using InterpolDatabaseProject.Model;
+using MahApps.Metro.Controls;
 
 namespace InterpolDatabaseProject
 {
@@ -18,7 +19,7 @@ namespace InterpolDatabaseProject
         public string TotalName { get; }
         public string Citizenship { get; set; }
         public string Image { get; set; }
-        public Brush TransparentBrush { get; set; }
+        public Brush TextColor { get; set; }
         public Сriminal.CriminalStateOptions State { get; set; }
 
         public CriminalsListboxItemData(int id, string forename, string codename, string lastname, int age, string citizenship, string imageName, Сriminal.CriminalStateOptions state)
@@ -34,13 +35,13 @@ namespace InterpolDatabaseProject
             switch (state)
             {
                 case Сriminal.CriminalStateOptions.Busted:
-                    TransparentBrush = Brushes.Yellow;
+                    TextColor = Brushes.Yellow;
                     break;
                 case Сriminal.CriminalStateOptions.Wasted:
-                    TransparentBrush = Brushes.DarkRed;
+                    TextColor = Brushes.Red;
                     break;;
                 case Сriminal.CriminalStateOptions.Wanted:
-                    TransparentBrush = Brushes.Transparent;
+                    TextColor = Brushes.White;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
@@ -48,7 +49,7 @@ namespace InterpolDatabaseProject
         }
     }
 
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public List<Сriminal> FilteredСriminals => ApplyFiltersToCriminals(Database.Criminals);
 
@@ -56,7 +57,7 @@ namespace InterpolDatabaseProject
         {
             get
             {
-                var result = FilteredСriminals.Select(criminal => new CriminalsListboxItemData(criminal.Id, criminal.Forename, criminal.CodeName, criminal.Lastname, criminal.Age, criminal.Citizenship.ToString(), (criminal.PhotosList.Count == 0) ? "default.jpg" : criminal.PhotosList[0], criminal.State)).ToList();
+                var result = FilteredСriminals.Select(criminal => new CriminalsListboxItemData(criminal.Id, criminal.Forename, criminal.CodeName, criminal.Lastname, criminal.Age, criminal.Citizenship.ToString(), (criminal.PhotosList.Count == 0) ? "default.png" : criminal.PhotosList[0], criminal.State)).ToList();
                 return result;
             }
         }
