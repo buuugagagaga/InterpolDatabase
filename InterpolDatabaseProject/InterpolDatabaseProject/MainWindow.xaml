@@ -3,16 +3,87 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:InterpolDatabaseProject"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="Interpol database" MinHeight="600" Height="600" MinWidth="800" Width="800" Icon="Storage/Files/icon.png">
-    <Controls:MetroWindow.RightWindowCommands>
-        <Controls:WindowCommands>
-            <Button Content="save" />
-            <Button Content="restore" />
-        </Controls:WindowCommands>
-    </Controls:MetroWindow.RightWindowCommands>
+        Title="Interpol database" MinHeight="600" Height="600" MinWidth="800" Width="800" Icon="Storage/Files/icon.png"
+        GlowBrush="{DynamicResource AccentColorBrush}" WindowStartupLocation="CenterScreen">
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout Name="NewCriminalFlyout" Header="New criminal" Position="Right" Width="600">
+                <ScrollViewer>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0">Forename</Label>
+                        <Label Grid.Column="0" Grid.Row="1">Codename</Label>
+                        <Label Grid.Column="0" Grid.Row="2">Lastname</Label>
+                        <Label Grid.Column="0" Grid.Row="3">Height</Label>
+                        <Label Grid.Column="0" Grid.Row="4">Color of eye</Label>
+                        <Label Grid.Column="0" Grid.Row="5">Color of hair</Label>
+                        <Label Grid.Column="0" Grid.Row="6">Sex</Label>
+                        <Label Grid.Column="0" Grid.Row="7">Special Signs</Label>
+                        <Label Grid.Column="0" Grid.Row="8">Citizenship</Label>
+                        <Label Grid.Column="0" Grid.Row="9">Country of birth</Label>
+                        <Label Grid.Column="0" Grid.Row="10">Place of birth</Label>
+                        <Label Grid.Column="0" Grid.Row="11">Date of birth</Label>
+                        <Label Grid.Column="0" Grid.Row="12">Last lived in (Country)</Label>
+                        <Label Grid.Column="0" Grid.Row="13">Last lived in (Place)</Label>
+                        <Label Grid.Column="0" Grid.Row="14">Languages</Label>
+                        <Label Grid.Column="0" Grid.Row="15">Current state</Label>
+                        <Label Grid.Column="0" Grid.Row="16">Photo</Label>
+
+                        <TextBox Name="AddNewCriminal_ForenameTextBox" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="AddNewCriminal_CodenameTextBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="AddNewCriminal_LastnameTextBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
+                            <Slider Width="100" Name="AddNewCriminal_HeightSlider" HorizontalAlignment="Stretch" VerticalAlignment="Center" Minimum="0" Maximum="250" SmallChange="1" LargeChange="5" Value="100" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
+                            <TextBox Text="{Binding ElementName=AddNewCriminal_HeightSlider, Path=Value}"/>
+                        </StackPanel>
+                        <ComboBox Name="AddNewCriminal_EyeColorComboBox" Grid.Column="1" SelectedIndex="0" Grid.Row="4"/>
+                        <ComboBox Name="AddNewCriminal_HairColorComboBox" Grid.Column="1" SelectedIndex="0" Grid.Row="5"/>
+                        <ComboBox Name="AddNewCriminal_SexComboBox" Grid.Column="1" Grid.Row="6" SelectedIndex="0"/>
+                        <TextBox Name="AddNewCriminal_SpecialSignsTextBox" Grid.Column="1" Grid.Row="7" TextWrapping="Wrap"></TextBox>
+                        <ComboBox Name="AddNewCriminal_CitizenshipComboBox" Grid.Column="1" Grid.Row="8" SelectedIndex="0"/>
+                        <ComboBox Name="AddNewCriminal_BirthCountryComboBox" Grid.Column="1" Grid.Row="9" SelectedIndex="0"/>
+                        <TextBox Name="AddNewCriminal_BirthplaceTextBox" Grid.Column="1" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <DatePicker Name="AddNewCriminal_BirthdateDatePicker" Grid.Column="1" Grid.Row="11" ></DatePicker>
+                        <ComboBox Name="AddNewCriminal_LastLivingCountryComboBox" Grid.Column="1" Grid.Row="12" SelectedIndex="0"/>
+                        <TextBox Name="AddNewCriminal_LastLivingPlaceTextBox" Grid.Column="1" Grid.Row="13" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <ScrollViewer Grid.Column="1" Grid.Row="14" MaxHeight="100">
+                            <ListBox Name="AddNewCriminal_LanguagesListBox" SelectionMode="Multiple"/>
+                        </ScrollViewer>
+                        <ComboBox Name="AddNewCriminal_CurrentStateComboBox" Grid.Column="1" Grid.Row="15" SelectedIndex="0"/>
+                        <Button  Click="AddNewCriminal_PickButton_Click" Grid.Column="1" Grid.Row="16">Pick file</Button>
+                        <TextBlock Grid.Column="1" Grid.Row="17" Name="AddNewCriminal_PhotoFilePath" Text="File not selected"></TextBlock>
+                        <Button Grid.Column="0" Grid.Row="18" Grid.ColumnSpan="2" Click="AddNewCriminal_SubmitButton_Click">SUBMIT</Button>
+                    </Grid>
+                </ScrollViewer>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -23,8 +94,8 @@
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
         <GridSplitter></GridSplitter>
-        <ScrollViewer Grid.Row="0" Grid.Column="0" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
-            <StackPanel Grid.Row="0" Grid.Column="0">
+        <ScrollViewer Grid.Row="0" Grid.Column="0">
+            <StackPanel>
                 <Expander Header="Information" IsExpanded="False">
                     <StackPanel>
                         <Label Content="Last name"/>
@@ -41,7 +112,7 @@
                     <StackPanel>
                         <Label Content="Height"/>
                         <Slider Minimum="50" Maximum="250" Value="180"></Slider>
-                        
+
                         <Label Content="Color of eye"/>
                         <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
                             <ComboBoxItem>Unknown</ComboBoxItem>
@@ -108,14 +179,8 @@
                         <TextBox Text="Enter here..."></TextBox>
                     </StackPanel>
                 </Expander>
-                <Expander Header="Connections" IsExpanded="False">
-                    <StackPanel>
-                        <Label Content="Group connection"></Label>
-                        <TextBox Text="Enter here..." ToolTip="Enter indices and separate them by coma"></TextBox>
-                        <Label Content="Crime connection"></Label>
-                        <TextBox Text="Enter here" ToolTip="Enter indices and separate them by coma"></TextBox>
-                    </StackPanel>
-                </Expander>
+                <Label Content="Group connection"></Label>
+                <TextBox Text="Enter here..." ToolTip="Enter indices and separate them by coma"></TextBox>
                 <Label Content="State"/>
                 <ListBox SelectionMode="Multiple" MaxHeight="100">
                     <ListBoxItem>Wanted</ListBoxItem>

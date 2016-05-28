@@ -24,7 +24,7 @@ namespace InterpolDatabaseProject.Model
         #endregion
         static Database()
         {
-              RestoreData();
+            //RestoreData();
         }
         #region Serialization
         public static void SaveData()
@@ -82,6 +82,23 @@ namespace InterpolDatabaseProject.Model
             _criminalGroups.Remove(id);
         }
         public static List<Сriminal> GetCriminalGroupMembers(int criminalGroupId) => Criminals.Values.Where(criminal => criminal.CriminalGroups.ContainsKey(criminalGroupId)).ToList();
+        #endregion
+
+        #region Other
+
+        public static void ChangeCriminalsPhoto(string photoFilePath, int criminalId)
+        {   
+            Criminals[criminalId].PhotoFileName = MovePhotoToLibrary(photoFilePath, criminalId);
+        }
+
+        private static string MovePhotoToLibrary(string photoFilePath, int id)
+        {
+            if(!File.Exists(photoFilePath)) throw new FileNotFoundException();
+            string result = "" + id + photoFilePath.Substring(photoFilePath.LastIndexOf(".", StringComparison.Ordinal));
+            File.Move(photoFilePath, "../../Storage/Data/"+result);
+            return result;
+        }
+
         #endregion
     }
 }

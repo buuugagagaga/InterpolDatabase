@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using InterpolDatabaseProject.Model;
-using MahApps.Metro.Controls;
 
 namespace InterpolDatabaseProject
 {
@@ -52,12 +51,11 @@ namespace InterpolDatabaseProject
     public partial class MainWindow
     {
         public List<Сriminal> FilteredСriminals => ApplyFiltersToCriminals(Database.Criminals);
-
         public List<CriminalsListboxItemData> CriminalsToShow
         {
             get
             {
-                var result = FilteredСriminals.Select(criminal => new CriminalsListboxItemData(criminal.Id, criminal.Forename, criminal.CodeName, criminal.Lastname, criminal.Age, criminal.Citizenship.ToString(), (criminal.PhotosList.Count == 0) ? "default.png" : criminal.PhotosList[0], criminal.State)).ToList();
+                var result = FilteredСriminals.Select(criminal => new CriminalsListboxItemData(criminal.Id, criminal.Forename, criminal.CodeName, criminal.Lastname, criminal.Age, criminal.Citizenship.ToString(), criminal.PhotoFileName ?? "default.png", criminal.State)).ToList();
                 return result;
             }
         }
@@ -65,23 +63,25 @@ namespace InterpolDatabaseProject
         public MainWindow()
         {
             InitializeComponent();
-            //for (int i = 0; i < 250; i++)
-            //{
-            //    Database.AddCriminal(new Сriminal("lastname " + i, "forename " + i, "codename " + i, 100, new EyeColor(1), new HairColor(1),
-            //        (Сriminal.SexOptions)(i % 3), new List<string>(), new Country(1), new Country(1), "place " + i,
-            //        DateTime.Today, new Country(1), "place " + i, new List<Language> { new Language(1) },
-            //        (Сriminal.CriminalStateOptions)(i % 3)));
-            //    Database.AddCrime(new Crime("CrimeTitle " + i, DateTime.Today, new Country(0), "place " + i, "No data"));
-            //    Database.AddCriminalGroup(new CriminalGroup("Group " + i, "No data"));
+            for (int i = 0; i < 250; i++)
+            {
+                Database.AddCriminal(new Сriminal("lastname " + i, "forename " + i, "codename " + i, 100, new EyeColor(1), new HairColor(1),
+                    (Сriminal.SexOptions)(i % 3), "no data", new Country(1), new Country(1), "place " + i,
+                    DateTime.Today, new Country(1), "place " + i, new List<Language> { new Language(1) },
+                    (Сriminal.CriminalStateOptions)(i % 3), null));
+                Database.AddCrime(new Crime("CrimeTitle " + i, DateTime.Today, new Country(0), "place " + i, "No data"));
+                Database.AddCriminalGroup(new CriminalGroup("Group " + i, "No data"));
 
-            //    Database.Criminals[i].AddCrime(Database.Crimes[i]);
-            //    Database.Criminals[i].AddCriminalGroup(Database.CriminalGroups[i]);
-            //}
+                Database.Criminals[i].AddCrime(Database.Crimes[i]);
+                Database.Criminals[i].AddCriminalGroup(Database.CriminalGroups[i]);
+            }
 
-            //Database.SaveData();
+            Database.SaveData();
             Database.RestoreData();
 
-            CriminalsListBox.ItemsSource = CriminalsToShow;
+            InitializeComponent();
+            SetDataSources();
+            NewCriminalFlyout.IsOpen = true;
         }
 
         private List<Сriminal> ApplyFiltersToCriminals(ReadOnlyDictionary<int, Сriminal> criminals)
@@ -91,9 +91,60 @@ namespace InterpolDatabaseProject
             return result;
         }
 
+        private void SetDataSources()
+        {
+            CriminalsListBox.ItemsSource = CriminalsToShow;
+            AddNewCriminal_EyeColorComboBox.ItemsSource = EyeColor.EyeColors;
+            AddNewCriminal_HairColorComboBox.ItemsSource = HairColor.HairColors;
+            AddNewCriminal_SexComboBox.ItemsSource = Enum.GetValues(typeof(Сriminal.SexOptions)).Cast<Сriminal.SexOptions>();
+            AddNewCriminal_CitizenshipComboBox.ItemsSource = Country.Countries;
+            AddNewCriminal_BirthCountryComboBox.ItemsSource = Country.Countries;
+            AddNewCriminal_BirthdateDatePicker.SelectedDate = default(DateTime);
+            AddNewCriminal_LastLivingCountryComboBox.ItemsSource = Country.Countries;
+            AddNewCriminal_CurrentStateComboBox.ItemsSource = Enum.GetValues(typeof(Сriminal.CriminalStateOptions)).Cast<Сriminal.CriminalStateOptions>();
+            AddNewCriminal_LanguagesListBox.ItemsSource = Model.Language.Languages;
+        }
+
+
+
         public static class Filter
         {
 
+        }
+
+        private void AddNewCriminal_PickButton_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".png",
+                Filter =
+                    "Images (*.jpeg, *.png, *.jpg)|*.jpeg;*.png;*.jpg"
+            };
+            bool? result = dlg.ShowDialog();
+            if (result == true)
+            {
+                AddNewCriminal_PhotoFilePath.Text = dlg.FileName;
+            }
+        }
+        private void AddNewCriminal_SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            //List<Language> 
+            //Database.AddCriminal(new Сriminal(AddNewCriminal_LastnameTextBox.Text,
+            //    AddNewCriminal_ForenameTextBox.Text,
+            //    AddNewCriminal_CodenameTextBox.Text,
+            //    AddNewCriminal_HeightSlider.Value,
+            //    new EyeColor(AddNewCriminal_EyeColorComboBox.SelectedIndex),
+            //    new HairColor(AddNewCriminal_HairColorComboBox.SelectedIndex),
+            //    (Сriminal.SexOptions)AddNewCriminal_SexComboBox.SelectedIndex,
+            //    AddNewCriminal_SpecialSignsTextBox.Text,
+            //    new Country(AddNewCriminal_CitizenshipComboBox.SelectedIndex),
+            //    new Country(AddNewCriminal_BirthCountryComboBox.SelectedIndex),
+            //    AddNewCriminal_BirthplaceTextBox.Text,
+            //    AddNewCriminal_BirthdateDatePicker.SelectedDate,
+            //    new Country(AddNewCriminal_LastLivingCountryComboBox.SelectedIndex),
+            //    AddNewCriminal_LastLivingPlaceTextBox.Text,
+                    
+            //    ));
         }
     }
 }

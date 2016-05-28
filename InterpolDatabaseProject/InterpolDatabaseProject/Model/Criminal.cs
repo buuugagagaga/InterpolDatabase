@@ -20,7 +20,7 @@ namespace InterpolDatabaseProject.Model
         public EyeColor ColorOfEye { get; set; }
         public HairColor ColorOfHair { get; set; }
         public SexOptions Sex { get; set; }
-        public List<string> SpecialSigns { get; set; }
+        public string SpecialSigns { get; set; }
 
         public Country Citizenship { get; set; }
         public Country BirthCountry { get; set; }
@@ -34,7 +34,7 @@ namespace InterpolDatabaseProject.Model
         private Dictionary<int, CriminalGroup> _criminalGroups = new Dictionary<int, CriminalGroup>();
         private Dictionary<int, Crime> _crimes = new Dictionary<int, Crime>();
 
-        public List<string> PhotosList { get; set; }
+        public string PhotoFileName { get; set; }
         public ReadOnlyDictionary<int, CriminalGroup> CriminalGroups => new ReadOnlyDictionary<int, CriminalGroup>(_criminalGroups);
         public ReadOnlyDictionary<int, Crime> Crimes => new ReadOnlyDictionary<int, Crime>(_crimes);
 
@@ -66,7 +66,7 @@ namespace InterpolDatabaseProject.Model
             ColorOfHair = (HairColor) info.GetValue("ColorOfHair", typeof(HairColor));
             Sex = (SexOptions)info.GetValue("Sex", typeof(SexOptions));
 
-            SpecialSigns = (List<string>) info.GetValue("SpecialSigns", typeof(List<string>));
+            SpecialSigns = (string) info.GetValue("SpecialSigns", typeof(string));
             Citizenship = (Country) info.GetValue("Citizenship", typeof(Country));
             BirthCountry = (Country)info.GetValue("BirthCountry", typeof(Country));
             Birthplace = info.GetString("Birthplace");
@@ -77,12 +77,12 @@ namespace InterpolDatabaseProject.Model
             State = (CriminalStateOptions) info.GetValue("State", typeof(CriminalStateOptions));
             _crimes = (Dictionary<int, Crime>)info.GetValue("_crimes", typeof(Dictionary<int, Crime>));
             _criminalGroups = (Dictionary<int, CriminalGroup>)info.GetValue("_criminalGroups", typeof(Dictionary<int, CriminalGroup>));
-            PhotosList = (List<string>) info.GetValue("PhotosList", typeof(List<string>));
+            PhotoFileName = info.GetString("PhotoFileName");
         }
         public Сriminal(string lastname, string forename, string codeName, ushort height, 
-            EyeColor colorOfEye, HairColor colorOfHair, SexOptions sex, List<string> specialSigns,
+            EyeColor colorOfEye, HairColor colorOfHair, SexOptions sex, string specialSigns,
             Country citizenship, Country birthCountry, string birthplace, DateTime birthdate, 
-            Country lastLivingCountry, string lastLivingPlace, List<Language> languages, CriminalStateOptions state)
+            Country lastLivingCountry, string lastLivingPlace, List<Language> languages, CriminalStateOptions state, string photoFileName)
         {
             Id = ++_lastId;
             Lastname = lastname;
@@ -103,7 +103,7 @@ namespace InterpolDatabaseProject.Model
             State = state;
             _criminalGroups = new Dictionary<int, CriminalGroup>();
             _crimes = new Dictionary<int, Crime>();
-            PhotosList = new List<string>();
+            PhotoFileName = photoFileName;
         }
 
         #region Enums
@@ -144,7 +144,7 @@ namespace InterpolDatabaseProject.Model
             info.AddValue("State", State, typeof(CriminalStateOptions));
             info.AddValue("_crimes", _crimes, typeof(Dictionary<int, Crime>));
             info.AddValue("_criminalGroups", _criminalGroups, typeof(Dictionary<int, CriminalGroup>));
-            info.AddValue("PhotosList", PhotosList, typeof(List<string>));
+            info.AddValue("PhotoFileName", PhotoFileName, typeof(string));
         }
     }
 }
