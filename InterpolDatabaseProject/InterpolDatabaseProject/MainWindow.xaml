@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InterpolDatabaseProject"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" MinHeight="600" MinWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -15,5 +15,132 @@
             <RowDefinition Height="9*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
+        <GridSplitter></GridSplitter>
+        <Image Grid.Row="1" Grid.Column="1" Source=""></Image>
+        <ScrollViewer Grid.Row="0" Grid.Column="0" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+            <StackPanel Grid.Row="0" Grid.Column="0">
+                <Expander Header="Information" IsExpanded="False">
+                    <StackPanel>
+                        <Label Content="Last name"/>
+                        <TextBox Text="Enter here..."></TextBox>
+                        <Label Content="Forename"/>
+                        <TextBox Text="Enter here..."></TextBox>
+                        <Label Content="Codename"/>
+                        <TextBox Text="Enter here..."></TextBox>
+                        <Label Content="Birth date"/>
+                        <DatePicker></DatePicker>
+                    </StackPanel>
+                </Expander>
+                <Expander Header="Characteristics" IsExpanded="False">
+                    <StackPanel>
+                        <Label Content="Height"/>
+                        <Slider Minimum="50" Maximum="250" Value="180"></Slider>
+                        
+                        <Label Content="Color of eye"/>
+                        <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
+                            <ComboBoxItem>Unknown</ComboBoxItem>
+                            <ComboBoxItem>Brown</ComboBoxItem>
+                            <ComboBoxItem>Black</ComboBoxItem>
+                            <ComboBoxItem>Gray</ComboBoxItem>
+                            <ComboBoxItem>Brown</ComboBoxItem>
+                            <ComboBoxItem>Black</ComboBoxItem>
+                            <ComboBoxItem>Gray</ComboBoxItem>
+                        </ComboBox>
+                        <Label Content="Color of hair"/>
+                        <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
+                            <ComboBoxItem>Unknown</ComboBoxItem>
+                            <ComboBoxItem>Brown</ComboBoxItem>
+                            <ComboBoxItem>Black</ComboBoxItem>
+                            <ComboBoxItem>Gray</ComboBoxItem>
+                            <ComboBoxItem>Brown</ComboBoxItem>
+                            <ComboBoxItem>Black</ComboBoxItem>
+                            <ComboBoxItem>Gray</ComboBoxItem>
+                        </ComboBox>
+                        <Label Content="Sex"/>
+                        <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
+                            <ComboBoxItem>Unknown</ComboBoxItem>
+                            <ComboBoxItem>Male</ComboBoxItem>
+                            <ComboBoxItem>Female</ComboBoxItem>
+                        </ComboBox>
+                        <Label Content="Special signs"/>
+                        <TextBox Text="Enter here..."></TextBox>
+                        <Label Content="Languages"/>
+                        <ListBox SelectionMode="Multiple" MaxHeight="100">
+                            <ListBoxItem>English</ListBoxItem>
+                            <ListBoxItem>Russian</ListBoxItem>
+                            <ListBoxItem>Ukrainian</ListBoxItem>
+                            <ListBoxItem>Spanish</ListBoxItem>
+                            <ListBoxItem>English</ListBoxItem>
+                            <ListBoxItem>Spanish</ListBoxItem>
+                            <ListBoxItem>English</ListBoxItem>
+                        </ListBox>
+                    </StackPanel>
+                </Expander>
+                <Expander Header="Locations" IsExpanded="False">
+                    <StackPanel>
+                        <Label Content="Citizenship"/>
+                        <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
+                            <ComboBoxItem>USA</ComboBoxItem>
+                            <ComboBoxItem>Columbia</ComboBoxItem>
+                            <ComboBoxItem>China</ComboBoxItem>
+                        </ComboBox >
+                        <Label Content="Country of birth"/>
+                        <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
+                            <ComboBoxItem>USA</ComboBoxItem>
+                            <ComboBoxItem>Columbia</ComboBoxItem>
+                            <ComboBoxItem>China</ComboBoxItem>
+                        </ComboBox>
+                        <Label Content="Place of birth"/>
+                        <TextBox Text="Enter here..."></TextBox>
+                        <Label Content="Last living country"/>
+                        <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
+                            <ComboBoxItem>USA</ComboBoxItem>
+                            <ComboBoxItem>Columbia</ComboBoxItem>
+                            <ComboBoxItem>China</ComboBoxItem>
+                        </ComboBox>
+                        <Label Content="Last living place"/>
+                        <TextBox Text="Enter here..."></TextBox>
+                    </StackPanel>
+                </Expander>
+                <Expander Header="Connections" IsExpanded="False">
+                    <StackPanel>
+                        <Label Content="Group connection"></Label>
+                        <TextBox Text="Enter here..." ToolTip="Enter indices and separate them by coma"></TextBox>
+                        <Label Content="Crime connection"></Label>
+                        <TextBox Text="Enter here" ToolTip="Enter indices and separate them by coma"></TextBox>
+                    </StackPanel>
+                </Expander>
+                <Label Content="State"/>
+                <ListBox SelectionMode="Multiple" MaxHeight="100">
+                    <ListBoxItem>Wanted</ListBoxItem>
+                    <ListBoxItem>Busted</ListBoxItem>
+                    <ListBoxItem>Wasted</ListBoxItem>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+        <ListBox x:Name="CriminalsListBox" Grid.Row="0" Grid.Column="1" BorderThickness="0" ItemsSource="{Binding CriminalsToShow}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="75">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="1">
+                            <Label  Content="{Binding TotalName}"/>
+                            <Label  Content="{Binding Country}"/>
+                        </StackPanel>
+
+
+                        <Image Grid.Column="0" Stretch="Fill" Source="{Binding Image}"></Image>
+                        <Rectangle Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{Binding TransparentBrush}" Opacity="0.35">
+                        </Rectangle>
+                        <Label Content="{Binding State}"   HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Courier New" FontWeight="Bold" FontSize="16" RenderTransformOrigin="0.5,0.5" Foreground="White">
+                        </Label>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

@@ -19,7 +19,7 @@ namespace InterpolDatabaseProject.Model
                 HairColors = (List<string>)xs.Deserialize(stream);
             }
         }
-        public HairColor(int id):this()
+        public HairColor(int id) : this()
         {
             Id = id;
         }
@@ -33,7 +33,7 @@ namespace InterpolDatabaseProject.Model
             }
             set
             {
-                if (value>=0 && value<HairColors.Count)
+                if (value >= 0 && value < HairColors.Count)
                     _id = value;
                 else throw new ArgumentOutOfRangeException();
             }
@@ -42,14 +42,6 @@ namespace InterpolDatabaseProject.Model
         public override string ToString()
         {
             return HairColors[Id];
-        }
-        public static bool operator ==(HairColor h1, HairColor h2)
-        {
-            return h1.Id == h2.Id;
-        }
-        public static bool operator !=(HairColor h1, HairColor h2)
-        {
-            return h1.Id != h2.Id;
         }
     }
 }

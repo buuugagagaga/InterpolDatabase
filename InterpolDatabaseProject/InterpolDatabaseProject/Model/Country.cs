@@ -16,17 +16,14 @@ namespace InterpolDatabaseProject.Model
             XmlSerializer xs = new XmlSerializer(typeof(List<string>));
             using (Stream stream = new FileStream("..\\..\\Storage\\AdditionalData\\countries.dat", FileMode.Open, FileAccess.Read, FileShare.None))
             {
-                Countries = (List<string>) xs.Deserialize(stream);
+                Countries = (List<string>)xs.Deserialize(stream);
             }
         }
-
-        public Country(int id):this()
+        public Country(int id) : this()
         {
             Id = id;
         }
-
         public static List<string> Countries { get; set; }
-
         public int Id
         {
             get
@@ -35,7 +32,7 @@ namespace InterpolDatabaseProject.Model
             }
             set
             {
-                if (value>=0 && value < Countries.Count)
+                if (value >= 0 && value < Countries.Count)
                     _id = value;
                 else throw new ArgumentOutOfRangeException();
             }

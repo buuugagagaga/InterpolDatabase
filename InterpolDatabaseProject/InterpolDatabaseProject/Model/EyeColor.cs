@@ -20,7 +20,7 @@ namespace InterpolDatabaseProject.Model
             }
         }
 
-        public EyeColor(int id):this()
+        public EyeColor(int id) : this()
         {
             Id = id;
         }
@@ -34,7 +34,7 @@ namespace InterpolDatabaseProject.Model
             }
             set
             {
-                if (value>=0 && value < EyeColors.Count)
+                if (value >= 0 && value < EyeColors.Count)
                     _id = value;
                 else throw new ArgumentOutOfRangeException();
             }
@@ -42,14 +42,6 @@ namespace InterpolDatabaseProject.Model
         public override string ToString()
         {
             return EyeColors[Id];
-        }
-        public static bool operator ==(EyeColor e1, EyeColor e2)
-        {
-            return e1.Id == e2.Id;
-        }
-        public static bool operator !=(EyeColor e1, EyeColor e2)
-        {
-            return e1.Id != e2.Id;
         }
     }
 }

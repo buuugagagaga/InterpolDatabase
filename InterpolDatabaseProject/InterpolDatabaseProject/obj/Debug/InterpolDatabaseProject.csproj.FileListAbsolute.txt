@@ -12,3 +12,7 @@ C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\Interp
 C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\obj\Debug\InterpolDatabaseProject.csproj.GenerateResource.Cache
 C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\obj\Debug\InterpolDatabaseProject.exe
 C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\obj\Debug\InterpolDatabaseProject.pdb
+C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\bin\Debug\MahApps.Metro.dll
+C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\bin\Debug\MahApps.Metro.pdb
+C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\bin\Debug\MahApps.Metro.xml

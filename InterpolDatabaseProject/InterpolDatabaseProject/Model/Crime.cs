@@ -1,67 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace InterpolDatabaseProject.Model
 {
     [Serializable]
-    public class Crime
+    public class Crime:ISerializable
     {
-        public CrimeType Type { get; set; }
+        private static int _lastId = -1;
+        public int Id { get; set; }
+        public string Title { get; set; }
         public DateTime Date { get; set; }
         public Country CommitmentCountry { get; set; }
         public string CommitmentPlace { get; set; }
         public string AdditionalData { get; set; }
 
-        public Crime()
+        public Crime(string title, DateTime date, Country commitmentCountry, string commitmentPlace, string additionalData)
         {
-            Type = new CrimeType(0);
-            CommitmentCountry = new Country(0);
-            CommitmentPlace = "Unknown";
-            AdditionalData = "No data";
-        }
-        public Crime(CrimeType type, DateTime date, Country commitmentCountry, string commitmentPlace, string additionalData)
-        {
-            Type = type;
+            Id = ++_lastId;
+            Title = title;
             Date = date;
             CommitmentCountry = commitmentCountry;
             CommitmentPlace = commitmentPlace;
             AdditionalData = additionalData;
         }
-
-        [Serializable]
-        public struct CrimeType
+       
+        public Crime(SerializationInfo info, StreamingContext context)
         {
-            private int _id;
-
-            static CrimeType()
-            {
-                CrimeTypes = new Dictionary<int, string> { { 0, "Unknown" } };
-            }
-
-            public CrimeType(int id):this()
-            {
-                Id = id;
-            }
-
-            public static Dictionary<int, string> CrimeTypes { get; set; }
-            public int Id
-            {
-                get
-                {
-                    return _id;
-                }
-                set
-                {
-                    if (CrimeTypes.ContainsKey(value))
-                        _id = value;
-                    else throw new ArgumentOutOfRangeException();
-                }
-            }
-            public override string ToString()
-            {
-                return CrimeTypes[Id];
-            }
+            _lastId = info.GetInt32("static._lastId");
+            Id = info.GetInt32("Id");
+            Title = info.GetString("Title");
+            Date = info.GetDateTime("Date");
+            CommitmentCountry = (Country) info.GetValue("CommitmentCountry", typeof(Country));
+            CommitmentPlace = info.GetString("CommitmentPlace");
+            AdditionalData = info.GetString("AdditionalData");
         }
-        
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("static._lastId", _lastId, typeof(int));
+            info.AddValue("Id", Id, typeof(int));
+            info.AddValue("Title", Title, typeof(string));
+            info.AddValue("Date", Date, typeof(DateTime));
+            info.AddValue("CommitmentCountry", CommitmentCountry, typeof(Country));
+            info.AddValue("CommitmentPlace", CommitmentPlace, typeof(string));
+            info.AddValue("AdditionalData", AdditionalData, typeof(string));
+        }
     }
 }

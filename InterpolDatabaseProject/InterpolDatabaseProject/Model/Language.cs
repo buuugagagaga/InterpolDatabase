@@ -19,7 +19,7 @@ namespace InterpolDatabaseProject.Model
                 Languages = (List<string>)xs.Deserialize(stream);
             }
         }
-        public Language(int id):this()
+        public Language(int id) : this()
         {
             Id = id;
         }
@@ -41,15 +41,6 @@ namespace InterpolDatabaseProject.Model
         public override string ToString()
         {
             return Languages[Id];
-        }
-
-        public static bool operator ==(Language l1, Language l2)
-        {
-            return l1.Id == l2.Id;
-        }
-        public static bool operator !=(Language l1, Language l2)
-        {
-            return l1.Id != l2.Id;
         }
     }
 }
