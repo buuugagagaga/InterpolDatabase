@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:global="clr-namespace:"
         mc:Ignorable="d"
         Title="Interpol database" MinHeight="600" Height="600" MinWidth="800" Width="800" Icon="Storage/Files/icon.png"
         GlowBrush="{DynamicResource AccentColorBrush}" WindowStartupLocation="CenterScreen" Closing="MainWindow_OnClosing">
@@ -69,8 +70,9 @@
                         <TextBox Name="AddNewCriminal_CodenameTextBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
                         <TextBox Name="AddNewCriminal_LastnameTextBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
                         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
-                            <Slider Width="100" Name="AddNewCriminal_HeightSlider" HorizontalAlignment="Stretch" VerticalAlignment="Center" Minimum="0" Maximum="250" SmallChange="1" LargeChange="5" Value="100" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
-                            <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding ElementName=AddNewCriminal_HeightSlider, Path=Value}"/>
+                            <CheckBox Name="AddNewCriminal_IsHeightKnownCheckBox" IsChecked="True"/>
+                            <Slider IsEnabled="{Binding ElementName=AddNewCriminal_IsHeightKnown, Path=IsChecked}" Width="100" Name="AddNewCriminal_HeightSlider" HorizontalAlignment="Stretch" VerticalAlignment="Center" Minimum="0" Maximum="250" SmallChange="1" LargeChange="5" Value="100" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
+                            <TextBox IsEnabled="{Binding ElementName=AddNewCriminal_IsHeightKnown, Path=IsChecked}" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsReadOnly="True" Text="{Binding ElementName=AddNewCriminal_HeightSlider, Path=Value}"/>
                         </StackPanel>
                         <ComboBox Name="AddNewCriminal_EyeColorComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" SelectedIndex="0" Grid.Row="4"/>
                         <ComboBox Name="AddNewCriminal_HairColorComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" SelectedIndex="0" Grid.Row="5"/>
@@ -98,6 +100,9 @@
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
+    <Window.Resources>
+        <global:NotConverter x:Key="NotConverter" />
+    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -109,97 +114,68 @@
         </Grid.RowDefinitions>
         <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
             <StackPanel>
-                <Expander Header="Information" IsExpanded="False">
+                <Expander Header="Current state">
+                    <ListBox Name="Filter_StateListBox" SelectionChanged="Filter_ControlValueChanged" SelectionMode="Multiple" MaxHeight="100"/>
+                </Expander>
+                <Expander Header="Information">
                     <StackPanel>
                         <Label Content="Lastname"/>
-                        <TextBox Name="Filter_LastnameTextBox" TextChanged="Filter_LastnameTextBox_OnTextChanged" Text=""/>
+                        <TextBox Name="Filter_LastnameTextBox" TextChanged="Filter_ControlValueChanged" Text=""/>
                         <Label Content="Forename"/>
-                        <TextBox Name="Filter_ForenameTextBox" TextChanged="Filter_ForenameTextBox_OnTextChanged"  Text=""/>
+                        <TextBox Name="Filter_ForenameTextBox" TextChanged="Filter_ControlValueChanged"  Text=""/>
                         <Label Content="Codename"/>
-                        <TextBox Name="Filter_CodenameTextBox" TextChanged="Filter_CodenameTextBox_OnTextChanged"  Text=""/>
+                        <TextBox Name="Filter_CodenameTextBox" TextChanged="Filter_ControlValueChanged"  Text=""/>
                     </StackPanel>
                 </Expander>
-                <Expander Header="Characteristics" IsExpanded="False">
+                <Expander Header="Characteristics">
                     <StackPanel>
-                        <Label Content="Age"/>
-                        <Slider Minimum="50" Maximum="250" Value="180"></Slider>
-                        <Label Content="Height"/>
-                        <Slider Minimum="50" Maximum="250" Value="180"></Slider>
 
+                        <Label Content="Age"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Name="Filter_IsAgeKnown" IsChecked="True" Unchecked="Filter_ControlValueChanged" Checked="Filter_ControlValueChanged"/>
+                            <Controls:RangeSlider Name="Filter_AgeRangeSlider"  Width="150" IsEnabled="{Binding ElementName=Filter_IsAgeKnown, Path=IsChecked}" RangeSelectionChanged="Filter_ControlValueChanged" Minimum="0" Maximum="150" LowerValue="0" UpperValue="150" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" MoveWholeRange="True" IsSnapToTickEnabled="True"></Controls:RangeSlider>
+                        </StackPanel>
+                        <Label Content="Height"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Name="Filter_IsHeightKnown" Checked="Filter_ControlValueChanged" Unchecked="Filter_ControlValueChanged"  IsChecked="True"/>
+                            <Controls:RangeSlider Name="Filter_HeightRangeSlider" Width="150" IsEnabled="{Binding ElementName=Filter_IsHeightKnown, Path=IsChecked}" RangeSelectionChanged="Filter_ControlValueChanged" Minimum="0" Maximum="250" LowerValue="0" UpperValue="250" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" MoveWholeRange="True" IsSnapToTickEnabled="True"></Controls:RangeSlider>
+                        </StackPanel>
                         <Label Content="Color of eye"/>
-                        <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
-                            <ComboBoxItem>Unknown</ComboBoxItem>
-                            <ComboBoxItem>Brown</ComboBoxItem>
-                            <ComboBoxItem>Black</ComboBoxItem>
-                            <ComboBoxItem>Gray</ComboBoxItem>
-                            <ComboBoxItem>Brown</ComboBoxItem>
-                            <ComboBoxItem>Black</ComboBoxItem>
-                            <ComboBoxItem>Gray</ComboBoxItem>
-                        </ComboBox>
+                        <ComboBox Name="Filter_EyeColorCombobox" SelectionChanged="Filter_ControlValueChanged" MaxHeight="100" IsEditable="True"/>
                         <Label Content="Color of hair"/>
-                        <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
-                            <ComboBoxItem>Unknown</ComboBoxItem>
-                            <ComboBoxItem>Brown</ComboBoxItem>
-                            <ComboBoxItem>Black</ComboBoxItem>
-                            <ComboBoxItem>Gray</ComboBoxItem>
-                            <ComboBoxItem>Brown</ComboBoxItem>
-                            <ComboBoxItem>Black</ComboBoxItem>
-                            <ComboBoxItem>Gray</ComboBoxItem>
-                        </ComboBox>
+                        <ComboBox Name="Filter_HairColorCombobox" SelectionChanged="Filter_ControlValueChanged" MaxHeight="100" IsEditable="True"/>
                         <Label Content="Sex"/>
-                        <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
-                            <ComboBoxItem>Unknown</ComboBoxItem>
-                            <ComboBoxItem>Male</ComboBoxItem>
-                            <ComboBoxItem>Female</ComboBoxItem>
-                        </ComboBox>
+                        <ComboBox Name="Filter_SexCombobox" SelectionChanged="Filter_ControlValueChanged" MaxHeight="100" IsEditable="True"/>
                         <Label Content="Special signs"/>
-                        <TextBox Text="Enter here..."></TextBox>
+                        <TextBox Name="Filter_SpecialSignsTextbox" TextChanged="Filter_ControlValueChanged"/>
                         <Label Content="Languages"/>
-                        <ListBox SelectionMode="Multiple" MaxHeight="100">
-                            <ListBoxItem>English</ListBoxItem>
-                            <ListBoxItem>Russian</ListBoxItem>
-                            <ListBoxItem>Ukrainian</ListBoxItem>
-                            <ListBoxItem>Spanish</ListBoxItem>
-                            <ListBoxItem>English</ListBoxItem>
-                            <ListBoxItem>Spanish</ListBoxItem>
-                            <ListBoxItem>English</ListBoxItem>
-                        </ListBox>
+                        <ListBox Name="Filter_LanguagesListbox" SelectionChanged="Filter_ControlValueChanged" SelectionMode="Multiple" MaxHeight="100"/>
                     </StackPanel>
                 </Expander>
-                <Expander Header="Locations" IsExpanded="False">
+                <Expander Header="Locations">
                     <StackPanel>
                         <Label Content="Citizenship"/>
-                        <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
-                            <ComboBoxItem>USA</ComboBoxItem>
-                            <ComboBoxItem>Columbia</ComboBoxItem>
-                            <ComboBoxItem>China</ComboBoxItem>
-                        </ComboBox >
+                        <ComboBox Name="Filter_CitizenshipComboBox" SelectionChanged="Filter_ControlValueChanged" MaxHeight="100" IsEditable="True"/>
                         <Label Content="Country of birth"/>
-                        <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
-                            <ComboBoxItem>USA</ComboBoxItem>
-                            <ComboBoxItem>Columbia</ComboBoxItem>
-                            <ComboBoxItem>China</ComboBoxItem>
-                        </ComboBox>
+                        <ComboBox Name="Filter_BirthCountryComboBox" SelectionChanged="Filter_ControlValueChanged" MaxHeight="100" IsEditable="True"/>
                         <Label Content="Place of birth"/>
-                        <TextBox Text="Enter here..."></TextBox>
+                        <TextBox Name="Filter_PlaceOfBirthTextBox" TextChanged="Filter_ControlValueChanged"/>
                         <Label Content="Last living country"/>
-                        <ComboBox MaxHeight="100" SelectedIndex="0" IsEditable="True">
-                            <ComboBoxItem>USA</ComboBoxItem>
-                            <ComboBoxItem>Columbia</ComboBoxItem>
-                            <ComboBoxItem>China</ComboBoxItem>
-                        </ComboBox>
+                        <ComboBox Name="Filter_LastLivingCountryComboBox" SelectionChanged="Filter_ControlValueChanged" MaxHeight="100" IsEditable="True"/>
                         <Label Content="Last living place"/>
-                        <TextBox Text="Enter here..."></TextBox>
+                        <TextBox Name="Filter_LastLivingPlaceTextBox" TextChanged="Filter_ControlValueChanged"/>
                     </StackPanel>
                 </Expander>
-                <Label Content="Criminal groups"></Label>
-                <TextBox Text="Enter here..." ToolTip="Enter indices and separate them by coma"></TextBox>
-                <Label Content="State"/>
-                <ListBox SelectionMode="Multiple" MaxHeight="100">
-                    <ListBoxItem>Wanted</ListBoxItem>
-                    <ListBoxItem>Busted</ListBoxItem>
-                    <ListBoxItem>Wasted</ListBoxItem>
-                </ListBox>
+                <Expander Header="Criminal groups">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Show all criminals"></Label>
+                            <CheckBox Name="Filter_ShowingAllCriminalsCheckBox" Checked="Filter_ControlValueChanged" Unchecked="Filter_ControlValueChanged" IsChecked="True"></CheckBox>
+                        </StackPanel>
+                        <ListBox Name="Filter_CriminalGroupsListBox" IsEnabled="{Binding ElementName=Filter_ShowingAllCriminalsCheckBox, Path=IsChecked, Converter={StaticResource NotConverter}}" SelectionChanged="Filter_ControlValueChanged" MaxHeight="100"/>
+
+                    </StackPanel>
+                </Expander>
             </StackPanel>
         </ScrollViewer>
         <ListBox x:Name="CriminalsListBox" SelectionChanged="CriminalsListBox_OnSelectionChanged" Grid.Row="0" Grid.Column="1" BorderThickness="0" ItemsSource="{Binding CriminalsToShow}" Tag="{Binding Id}">
@@ -226,7 +202,7 @@
         </ListBox>
         <StackPanel Name="CriminalActions" Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
             <Button Name="CriminalActions_AddCriminalButton" Click="CriminalActions_AddCriminalButton_OnClick" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100">Add criminal</Button>
-            <Button Name="CriminalActions_OpenProfileButton" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100">Open profile</Button>
+            <Button Name="CriminalActions_OpenProfileButton" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100">Open profile</Button>
             <Button Name="CriminalActions_DeleteCriminalButton" IsEnabled="False" Click="CriminalActions_DeleteCriminalButton_OnClick" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="100">Delete criminal</Button>
         </StackPanel>
     </Grid>

@@ -9,12 +9,13 @@ namespace InterpolDatabaseProject.Model
     public class Сriminal : ISerializable
     {
         #region Properies
-        private static int _lastId = -1;
+        public static int LastId { get; private set; } = -1;
+
         public int Id { get; set; }
         public string Lastname { get; set; }
         public string Forename { get; set; }
         public string CodeName { get; set; }
-        public int Height { get; set; }
+        public int? Height { get; set; }
         public EyeColor ColorOfEye { get; set; }
         public HairColor ColorOfHair { get; set; }
         public SexOptions Sex { get; set; }
@@ -30,7 +31,15 @@ namespace InterpolDatabaseProject.Model
         public CriminalGroup CriminalGroupMembership { get; set; }
         public string PhotoFileName { get; set; }
         public List<Crime> Charges { get; set; }
-        public int Age => (Birthdate==null)?0:DateTime.Now.Year - Birthdate.Value.Year;
+        public int? Age
+        {
+            get
+            {
+                if (Birthdate == null) return null;
+                return DateTime.Today.Year - Birthdate.Value.Year;
+            }
+        }
+
         #endregion
 
         public void SetCriminalGroup(CriminalGroup criminalGroup) {
@@ -49,12 +58,12 @@ namespace InterpolDatabaseProject.Model
         
         public Сriminal(SerializationInfo info, StreamingContext context)
         {
-            _lastId = info.GetInt32("static._lastId");
+            LastId = info.GetInt32("static._lastId");
             Id = info.GetInt32("Id");
             Lastname = info.GetString("Lastname");
             CodeName = info.GetString("CodeName");
             Forename = info.GetString("Forename");
-            Height = info.GetInt32("Height");
+            Height = (int?)info.GetValue("Height", typeof(int?));
             ColorOfEye = (EyeColor)info.GetValue("ColorOfEye", typeof(EyeColor));
             ColorOfHair = (HairColor) info.GetValue("ColorOfHair", typeof(HairColor));
             Sex = (SexOptions)info.GetValue("Sex", typeof(SexOptions));
@@ -71,13 +80,13 @@ namespace InterpolDatabaseProject.Model
             PhotoFileName = info.GetString("PhotoFileName");
             Charges = (List<Crime>)info.GetValue("Charges", typeof(List<Crime>));
         }
-        public Сriminal(string lastname, string forename, string codeName, int height, 
+        public Сriminal(string lastname, string forename, string codeName, int? height, 
             EyeColor colorOfEye, HairColor colorOfHair, SexOptions sex, string specialSigns,
             Country citizenship, Country birthCountry, string birthplace, DateTime? birthdate, 
             Country lastLivingCountry, string lastLivingPlace, List<Language> languages, CriminalStateOptions state, string photoFileName, 
             CriminalGroup criminalGroup, List<Crime> charges)
         {
-            Id = ++_lastId;
+            Id = ++LastId;
             Lastname = lastname;
             Forename = forename;
             CodeName = codeName;
@@ -94,7 +103,7 @@ namespace InterpolDatabaseProject.Model
             LastLivingPlace = lastLivingPlace;
             Languages = languages;
             State = state;
-            CriminalGroupMembership = criminalGroup;
+            SetCriminalGroup(criminalGroup);
             PhotoFileName = photoFileName;
             Charges = charges;
         }
@@ -116,13 +125,13 @@ namespace InterpolDatabaseProject.Model
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("static._lastId", _lastId, typeof(int));
+            info.AddValue("static._lastId", LastId, typeof(int));
             info.AddValue("Id", Id, typeof(int));
 
             info.AddValue("Lastname", Lastname, typeof(string));
             info.AddValue("CodeName", CodeName, typeof(string));
             info.AddValue("Forename", Forename, typeof(string));
-            info.AddValue("Height", Height, typeof(int));
+            info.AddValue("Height", Height, typeof(int?));
             info.AddValue("ColorOfEye", ColorOfEye, typeof(EyeColor));
             info.AddValue("ColorOfHair", ColorOfHair, typeof(HairColor));
             info.AddValue("Sex", Sex, typeof(SexOptions));

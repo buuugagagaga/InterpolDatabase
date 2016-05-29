@@ -7,13 +7,13 @@ using System.Xml.Serialization;
 namespace InterpolDatabaseProject.Model
 {
     [Serializable]
-    public struct Language
+    public struct Language : IEquatable<Language>
     {
         private int _id;
 
         static Language()
         {
-            Languages = new List<string> { "Unknown" };
+            Languages = new List<string> { "English" };
             XmlSerializer xs = new XmlSerializer(typeof(List<string>));
             using (Stream stream = new FileStream("..\\..\\Storage\\AdditionalData\\languages.dat", FileMode.Open, FileAccess.Read, FileShare.None))
             {
@@ -38,6 +38,12 @@ namespace InterpolDatabaseProject.Model
                     _id = value;
                 else throw new ArgumentOutOfRangeException();
             }
+        }
+
+
+        public bool Equals(Language other)
+        {
+            return Id == other.Id;
         }
 
         public override string ToString()

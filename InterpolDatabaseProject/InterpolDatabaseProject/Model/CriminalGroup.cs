@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace InterpolDatabaseProject.Model
 {
     [Serializable]
-    public class CriminalGroup : ISerializable
+    public class CriminalGroup : ISerializable, IEquatable<CriminalGroup>
     {
         private static int _lastId = -1;
 
@@ -53,6 +53,11 @@ namespace InterpolDatabaseProject.Model
             info.AddValue("Id", Id, typeof(int));
             info.AddValue("Name", Name, typeof(string));
             info.AddValue("AdditionalData", AdditionalData, typeof(string));
+        }
+
+        public bool Equals(CriminalGroup other)
+        {
+            return Id == other.Id;
         }
 
         public override string ToString()
