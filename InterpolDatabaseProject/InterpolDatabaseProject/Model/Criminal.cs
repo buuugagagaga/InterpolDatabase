@@ -103,7 +103,8 @@ namespace InterpolDatabaseProject.Model
             LastLivingPlace = lastLivingPlace;
             Languages = languages;
             State = state;
-            SetCriminalGroup(criminalGroup);
+            if(criminalGroup!=null)
+                SetCriminalGroup(criminalGroup);
             PhotoFileName = photoFileName;
             Charges = charges;
         }

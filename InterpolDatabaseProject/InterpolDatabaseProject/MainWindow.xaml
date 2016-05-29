@@ -4,13 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:global="clr-namespace:"
         mc:Ignorable="d"
         Title="Interpol database" MinHeight="600" Height="600" MinWidth="800" Width="800" Icon="Storage/Files/icon.png"
         GlowBrush="{DynamicResource AccentColorBrush}" WindowStartupLocation="CenterScreen" Closing="MainWindow_OnClosing">
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout Name="AddNewCriminal" Header="New criminal" Position="Right" Width="600" IsOpenChanged="Flyout_OnIsOpenChanged">
+            <Controls:Flyout Name="AddNewCriminalFlyout" Header="New criminal" Position="Right" Width="600" IsOpenChanged="AddNewCriminalFlyout_OnIsOpenChanged">
                 <ScrollViewer>
                     <Grid>
                         <Grid.Resources>
@@ -98,11 +97,18 @@
                     </Grid>
                 </ScrollViewer>
             </Controls:Flyout>
+            <Controls:Flyout Name="AddNewCriminalGroupFlyout" Header="New criminal group" Position="Left" Width="400">
+                <StackPanel Width="300">
+                    <Label>Name</Label>
+                    <TextBox Name="AddNewCriminalGroup_NameTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                    <Label>Additional data</Label>
+                    <TextBox Name="AddNewCriminalGroup_AdditionalDataTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextWrapping="Wrap"></TextBox>
+                    <Button Name="AddNewCriminalGroup_SubmitButton" Click="AddNewCriminalGroup_SubmitButton_OnClick">Submit</Button>
+                </StackPanel>
+            </Controls:Flyout>
+
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
-    <Window.Resources>
-        <global:NotConverter x:Key="NotConverter" />
-    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -129,7 +135,6 @@
                 </Expander>
                 <Expander Header="Characteristics">
                     <StackPanel>
-
                         <Label Content="Age"/>
                         <StackPanel Orientation="Horizontal">
                             <CheckBox Name="Filter_IsAgeKnown" IsChecked="True" Unchecked="Filter_ControlValueChanged" Checked="Filter_ControlValueChanged"/>
@@ -168,39 +173,60 @@
                 </Expander>
                 <Expander Header="Criminal groups">
                     <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Show all criminals"></Label>
-                            <CheckBox Name="Filter_ShowingAllCriminalsCheckBox" Checked="Filter_ControlValueChanged" Unchecked="Filter_ControlValueChanged" IsChecked="True"></CheckBox>
-                        </StackPanel>
-                        <ListBox Name="Filter_CriminalGroupsListBox" IsEnabled="{Binding ElementName=Filter_ShowingAllCriminalsCheckBox, Path=IsChecked, Converter={StaticResource NotConverter}}" SelectionChanged="Filter_ControlValueChanged" MaxHeight="100"/>
-
+                        <Button Name="Filter_ShowAllCriminals" Click="Filter_ShowAllCriminals_OnClick">Criminals from all groups</Button>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Name="CriminalGroupsListBox_AddGroupButton" Click="CriminalGroupsListBox_AddGroupButton_OnClick" Grid.Column="0" Style="{StaticResource AccentedSquareButtonStyle}">New group</Button>
+                            <Button Name="CriminalGroupsListBox_DeleteGroupButton" Click="CriminalGroupsListBox_DeleteGroupButton_OnClick" Grid.Column="1" Style="{StaticResource AccentedSquareButtonStyle}">Delete group</Button>
+                        </Grid>
+                        <ListBox Name="CriminalGroupsListBox" SelectionChanged="CriminalGroupsListBox_OnSelectionChanged" MaxHeight="100"/>
                     </StackPanel>
                 </Expander>
             </StackPanel>
         </ScrollViewer>
-        <ListBox x:Name="CriminalsListBox" SelectionChanged="CriminalsListBox_OnSelectionChanged" Grid.Row="0" Grid.Column="1" BorderThickness="0" ItemsSource="{Binding CriminalsToShow}" Tag="{Binding Id}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Height="150">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="5*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="1">
-                            <Label Content="{Binding TotalName}" FontSize="18"/>
-                            <Label Content="{Binding Citizenship}" FontSize="16"/>
-                        </StackPanel>
-                        <Image Grid.Column="0" Width="150" Source="{Binding Image}" Stretch="Uniform"/>
-                        <Label Content="{Binding State}"   HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Courier New" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.5,0.5" Foreground="{Binding TextColor}">
-                            <Label.Effect>
-                                <DropShadowEffect/>
-                            </Label.Effect>
-                        </Label>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <StackPanel Name="CriminalActions" Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+        <ScrollViewer Grid.Row="0" Grid.Column="1">
+            <StackPanel>
+                <Grid Name="CriminalGroupInformationGrid" MaxHeight="200" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Name="CriminalGroupInformationGrid_Name" Grid.Row="0" HorizontalAlignment="Center" FontSize="21.333" FontWeight="Bold">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="0.1"/>
+                        </Label.Effect>
+                    </Label>
+                    <TextBlock Name="CriminalGroupInformationGrid_Information" TextWrapping="Wrap" Grid.Row="1"  HorizontalAlignment="Center"/>
+                </Grid>
+                <ListBox x:Name="CriminalsListBox" SelectionChanged="CriminalsListBox_OnSelectionChanged" BorderThickness="0" ItemsSource="{Binding CriminalsToShow}" Tag="{Binding Id}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="150">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="1">
+                                    <Label Content="{Binding TotalName}" FontSize="18"/>
+                                    <Label Content="{Binding Citizenship}" FontSize="16"/>
+                                </StackPanel>
+                                <Image Grid.Column="0" Width="150" Source="{Binding Image}" Stretch="Uniform"/>
+                                <Label Content="{Binding State}"   HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Courier New" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.5,0.5" Foreground="{Binding TextColor}">
+                                    <Label.Effect>
+                                        <DropShadowEffect/>
+                                    </Label.Effect>
+                                </Label>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Name="CriminalActionsStackPanel" Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
             <Button Name="CriminalActions_AddCriminalButton" Click="CriminalActions_AddCriminalButton_OnClick" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100">Add criminal</Button>
             <Button Name="CriminalActions_OpenProfileButton" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100">Open profile</Button>
             <Button Name="CriminalActions_DeleteCriminalButton" IsEnabled="False" Click="CriminalActions_DeleteCriminalButton_OnClick" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="100">Delete criminal</Button>

@@ -45,6 +45,7 @@ namespace InterpolDatabaseProject.Model
             Id = info.GetInt32("Id");
             Name = info.GetString("Name");
             AdditionalData = info.GetString("AdditionalData");
+            _members = (Dictionary<int, Сriminal>) info.GetValue("_members", typeof(Dictionary<int, Сriminal>));
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -53,6 +54,7 @@ namespace InterpolDatabaseProject.Model
             info.AddValue("Id", Id, typeof(int));
             info.AddValue("Name", Name, typeof(string));
             info.AddValue("AdditionalData", AdditionalData, typeof(string));
+            info.AddValue("_members", _members, typeof(Dictionary<int, Сriminal>));
         }
 
         public bool Equals(CriminalGroup other)

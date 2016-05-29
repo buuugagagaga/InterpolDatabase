@@ -3,12 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using InterpolDatabaseProject.Model;
@@ -30,7 +28,7 @@ namespace InterpolDatabaseProject
         public CriminalsListboxItemData(int id, string forename, string codename, string lastname, int? age, string citizenship, string imageName, Сriminal.CriminalStateOptions state)
         {
             Id = id;
-            TotalName = forename + " " + codename + " " + lastname + ", AGE: " + ((age == null) ? "-" : age.ToString());
+            TotalName = "#"+ id + " - " + forename + " " + codename + " " + lastname + " AGE: " + ((age == null) ? "-" : age.ToString());
             Citizenship = citizenship;
             if (!File.Exists("..\\..\\Storage\\Files\\" + imageName))
                 throw new FileNotFoundException();
@@ -116,6 +114,9 @@ namespace InterpolDatabaseProject
         {
             InitializeComponent();
 
+            Database.AddCriminalGroup(new CriminalGroup("Mafia", "No data about mafia."));
+            Database.AddCriminalGroup(new CriminalGroup("ISIS", "Lots of data: blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah."));
+            Database.SaveData();
             Database.RestoreData();
 
             InitializeComponent();
@@ -126,19 +127,12 @@ namespace InterpolDatabaseProject
 
         private List<Сriminal> ApplyFiltersToCriminals(ReadOnlyDictionary<int, Сriminal> criminals)
         {
-            List<Сriminal> result;
-            if (Filter_ShowingAllCriminalsCheckBox.IsChecked.Value ||
-                Filter_CriminalGroupsListBox.SelectedItems.Count == 0)
-                result = new List<Сriminal>(criminals.Values);
-            else result = new List<Сriminal>(((CriminalGroup) Filter_CriminalGroupsListBox.SelectedItem).Members.Values);
+            var result = CriminalGroupsListBox.SelectedItems.Count == 0 ? new List<Сriminal>(criminals.Values) : new List<Сriminal>(((KeyValuePair<int, CriminalGroup>) CriminalGroupsListBox.SelectedItem).Value.Members.Values);
 
-            if (Filter_StateListBox.SelectedItems.Count > 0)
-                result = Filter.ByState(result, Filter_StateListBox.SelectedItems);
-            
+            if (Filter_StateListBox.SelectedItems.Count > 0) result = Filter.ByState(result, Filter_StateListBox.SelectedItems);
+
             if (Filter_ForenameTextBox.Text != "") result = Filter.ByForename(result, Filter_ForenameTextBox.Text);
-
             if (Filter_CodenameTextBox.Text != "") result = Filter.ByCodename(result, Filter_CodenameTextBox.Text);
-
             if (Filter_LastnameTextBox.Text != "") result = Filter.ByLastname(result, Filter_LastnameTextBox.Text);
             
             if (!Filter_IsAgeKnown.IsChecked.Value)
@@ -152,24 +146,16 @@ namespace InterpolDatabaseProject
                 result = Filter.ByHeight(result, (int)Filter_HeightRangeSlider.LowerValue, (int)Filter_HeightRangeSlider.UpperValue);
 
             if (Filter_EyeColorCombobox.SelectedIndex != -1) result = Filter.ByEyeColor(result, Filter_EyeColorCombobox.SelectedIndex);
-
             if (Filter_HairColorCombobox.SelectedIndex != -1) result = Filter.ByHairColor(result, Filter_HairColorCombobox.SelectedIndex);
-
             if (Filter_SexCombobox.SelectedIndex != -1) result = Filter.BySex(result, Filter_SexCombobox.SelectedValue.ToString());
-
             if (Filter_SpecialSignsTextbox.Text != "") result = Filter.BySpecialSigns(result, Filter_SpecialSignsTextbox.Text);
-
-            if (Filter_LanguagesListbox.SelectedItems.Count > 0)
-                result = Filter.ByLanguages(result, Filter_LanguagesListbox.SelectedItems);
-
-
+            if (Filter_LanguagesListbox.SelectedItems.Count > 0) result = Filter.ByLanguages(result, Filter_LanguagesListbox.SelectedItems);
             if (Filter_CitizenshipComboBox.SelectedIndex != -1) result = Filter.ByCitizenship(result, Filter_CitizenshipComboBox.SelectedIndex);
             if (Filter_BirthCountryComboBox.SelectedIndex != -1) result = Filter.ByBirthCountry(result, Filter_BirthCountryComboBox.SelectedIndex);
             if(Filter_PlaceOfBirthTextBox.Text != "") result = Filter.ByBirthPlace(result, Filter_PlaceOfBirthTextBox.Text);
             if (Filter_LastLivingCountryComboBox.SelectedIndex != -1) result = Filter.ByLastLivingCountry(result, Filter_LastLivingCountryComboBox.SelectedIndex);
             if (Filter_LastLivingPlaceTextBox.Text != "") result = Filter.ByLastLivingPlace(result, Filter_LastLivingPlaceTextBox.Text);
             
-            ///todo: Написать фильтрацию
             return result;
         }
 
@@ -206,8 +192,8 @@ namespace InterpolDatabaseProject
         private void Reload_CriminalGroups()
         {
             if (AddNewCriminal_CriminalGroupComboBox == null) return;
-            AddNewCriminal_CriminalGroupComboBox.ItemsSource = Database.CriminalGroups.Values;
-            Filter_CriminalGroupsListBox.ItemsSource = Database.CriminalGroups.Values;
+            AddNewCriminal_CriminalGroupComboBox.ItemsSource = Database.CriminalGroups;
+            CriminalGroupsListBox.ItemsSource = Database.CriminalGroups;
         }
 
         private void AddNewCriminal_PickButton_Click(object sender, RoutedEventArgs e)
@@ -252,7 +238,7 @@ namespace InterpolDatabaseProject
                 null,
                 (AddNewCriminal_CriminalGroupComboBox.SelectedIndex == -1)
                     ? null
-                    : Database.CriminalGroups[AddNewCriminal_CriminalGroupComboBox.SelectedIndex],
+                    : Database.CriminalGroups[((KeyValuePair<int,CriminalGroup>)AddNewCriminal_CriminalGroupComboBox.SelectedItem).Key],
                 charges
                 )
                 );
@@ -261,7 +247,7 @@ namespace InterpolDatabaseProject
                 Database.ChangeCriminalsPhoto(AddNewCriminal_PhotoFilePath.Text, Сriminal.LastId);
 
             Reload_CriminalsListBox();
-            AddNewCriminal.IsOpen = false;
+            AddNewCriminalFlyout.IsOpen = false;
         }
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
@@ -269,9 +255,9 @@ namespace InterpolDatabaseProject
             Database.SaveData();
         }
 
-        private void CriminalActions_AddCriminalButton_OnClick(object sender, RoutedEventArgs e) => AddNewCriminal.IsOpen = true;
+        private void CriminalActions_AddCriminalButton_OnClick(object sender, RoutedEventArgs e) => AddNewCriminalFlyout.IsOpen = true;
 
-        private void Flyout_OnIsOpenChanged(object sender, RoutedEventArgs e) => MainGrid.IsEnabled = !MainGrid.IsEnabled;
+        private void AddNewCriminalFlyout_OnIsOpenChanged(object sender, RoutedEventArgs e) => MainGrid.IsEnabled = !MainGrid.IsEnabled;
 
         private void CriminalActions_DeleteCriminalButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -286,19 +272,45 @@ namespace InterpolDatabaseProject
 
         private void Filter_ControlValueChanged(object sender, object e) => Reload_CriminalsListBox();
 
-    }
-}
+        private void Filter_ShowAllCriminals_OnClick(object sender, RoutedEventArgs e) => CriminalGroupsListBox.UnselectAll();
 
+        private void CriminalGroupsListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CriminalGroupsListBox.SelectedIndex == -1)
+            {
+                CriminalGroupInformationGrid.Visibility = Visibility.Collapsed;
+                CriminalGroupInformationGrid_Name.Content = "";
+                CriminalGroupInformationGrid_Information.Text = "";
+            }
+            else
+            {
+                var selectedCriminalGroup = ((KeyValuePair<int, CriminalGroup>) CriminalGroupsListBox.SelectedItem).Value;
+                CriminalGroupInformationGrid.Visibility = Visibility.Visible;
+                CriminalGroupInformationGrid_Name.Content = selectedCriminalGroup.Name;
+                CriminalGroupInformationGrid_Information.Text = selectedCriminalGroup.AdditionalData;
+            }
+            CriminalGroupsListBox_DeleteGroupButton.IsEnabled = CriminalGroupsListBox.SelectedIndex != -1;
+            Reload_CriminalsListBox();
+        }
 
-public class NotConverter : IValueConverter
-{
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return !(bool)value;
-    }
+        private void CriminalGroupsListBox_AddGroupButton_OnClick(object sender, RoutedEventArgs e) => AddNewCriminalGroupFlyout.IsOpen = true;
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return !(bool)value;
+        private void AddNewCriminalGroup_SubmitButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (AddNewCriminalGroup_NameTextBox.Text == "")
+            {
+                AddNewCriminalGroup_NameTextBox.Text = "Required";
+                return;
+            }
+
+            Database.AddCriminalGroup(new CriminalGroup(AddNewCriminalGroup_NameTextBox.Text, AddNewCriminalGroup_AdditionalDataTextBox.Text));
+            AddNewCriminalGroupFlyout.IsOpen = false;
+            Reload_CriminalGroups();
+        }
+        
+        private void CriminalGroupsListBox_DeleteGroupButton_OnClick(object sender, RoutedEventArgs e) {
+            Database.DeleteCriminalGroup(((KeyValuePair<int, CriminalGroup>)CriminalGroupsListBox.SelectedItem).Key);
+            Reload_CriminalGroups();
+        }
     }
 }

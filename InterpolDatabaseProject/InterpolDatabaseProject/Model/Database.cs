@@ -58,8 +58,8 @@ namespace InterpolDatabaseProject.Model
         public static void AddCriminalGroup(CriminalGroup criminalGroup) => _criminalGroups.Add(criminalGroup.Id, criminalGroup);
         public static void DeleteCriminalGroup(int id)
         {
-            foreach (Сriminal criminalGroupMember in CriminalGroups[id].Members.Values)
-                criminalGroupMember.UnsetCriminalGroup();
+            while (CriminalGroups[id].Members.Count > 0)
+                CriminalGroups[id].Members.First().Value.UnsetCriminalGroup();
             _criminalGroups.Remove(id);
         }
         #endregion
