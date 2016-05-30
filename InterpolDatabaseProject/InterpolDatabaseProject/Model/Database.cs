@@ -72,12 +72,20 @@ namespace InterpolDatabaseProject.Model
         private static string MovePhotoToLibrary(string photoFilePath, int id)
         {
             if(!File.Exists(photoFilePath)) throw new FileNotFoundException();
-            string resultFileName = "" + id + photoFilePath.Substring(photoFilePath.LastIndexOf(".", StringComparison.Ordinal));
-            string resultFilePath = "../../Storage/Files/" + resultFileName;
-            if (File.Exists(resultFilePath))
-                File.Delete(resultFilePath);
-            File.Copy(photoFilePath, "../../Storage/Files/"+ resultFileName);
-            return resultFileName;
+            int count = 1;
+            string fileName = id.ToString();
+            string fileExtension = Path.GetExtension(photoFilePath);
+            string path = "../../Storage/Files/";
+            string newFullPath = path+fileName+fileExtension;
+
+            while (File.Exists(newFullPath))
+            {
+                string tempFileName = string.Format("{0}({1})", fileName, count++);
+                newFullPath = Path.Combine(path, tempFileName + fileExtension);
+            }
+            
+            File.Copy(photoFilePath, newFullPath);
+            return Path.GetFileName(newFullPath);
         }
         #endregion
     }

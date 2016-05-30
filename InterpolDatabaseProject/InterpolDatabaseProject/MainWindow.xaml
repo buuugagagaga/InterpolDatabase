@@ -213,7 +213,7 @@
                     <Button Name="CriminalGroupInformationGrid_ChangeDataButton" Grid.Row="2" Click="CriminalGroupInformationGrid_ChangeDataButton_OnClick">Change criminal group data</Button>
                 </Grid>
                 
-                <ListBox x:Name="CriminalsListBox" SelectionChanged="CriminalsListBox_OnSelectionChanged" BorderThickness="0" ItemsSource="{Binding CriminalsToShow}" Tag="{Binding Id}">
+                <ListBox  x:Name="CriminalsListBox" SelectionChanged="CriminalsListBox_OnSelectionChanged" BorderThickness="0" ItemsSource="{Binding CriminalsToShow}" Tag="{Binding Id}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Height="150">
@@ -226,7 +226,7 @@
                                     <Label Content="{Binding Citizenship}" FontSize="16"/>
                                 </StackPanel>
                                 <Image Grid.Column="0" Width="150" Source="{Binding Image}" Stretch="Uniform"/>
-                                <Label Content="{Binding State}"   HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Courier New" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.5,0.5" Foreground="{Binding TextColor}">
+                                <Label Content="{Binding State}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Courier New" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.5,0.5" Foreground="{Binding TextColor}">
                                     <Label.Effect>
                                         <DropShadowEffect/>
                                     </Label.Effect>

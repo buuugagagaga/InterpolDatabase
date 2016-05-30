@@ -315,7 +315,7 @@ namespace InterpolDatabaseProject
         {
             CriminalProfile criminalProfile = new CriminalProfile(Database.Criminals[((CriminalsListboxItemData)CriminalsListBox.SelectedItem).Id]);
             criminalProfile.ShowDialog();
-            
+            Reload_CriminalsListBox();
         }
 
         private void CriminalGroupInformationGrid_ChangeDataButton_OnClick(object sender, RoutedEventArgs e)
