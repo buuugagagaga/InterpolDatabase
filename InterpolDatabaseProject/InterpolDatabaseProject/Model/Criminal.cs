@@ -112,9 +112,9 @@ namespace InterpolDatabaseProject.Model
         #region Enums
         public enum SexOptions
         {
+            Unknown,
             Male,
-            Female,
-            Unknown
+            Female
         }
         public enum CriminalStateOptions
         {

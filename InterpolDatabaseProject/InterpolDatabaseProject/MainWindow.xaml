@@ -9,7 +9,7 @@
         GlowBrush="{DynamicResource AccentColorBrush}" WindowStartupLocation="CenterScreen" Closing="MainWindow_OnClosing">
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout Name="AddNewCriminalFlyout" Header="New criminal" Position="Right" Width="600" IsOpenChanged="AddNewCriminalFlyout_OnIsOpenChanged">
+            <Controls:Flyout Name="AddNewCriminalFlyout" Header="New criminal" Position="Right" Width="600" IsOpenChanged="Flyout_OnIsOpenChanged">
                 <ScrollViewer>
                     <Grid>
                         <Grid.Resources>
@@ -70,8 +70,8 @@
                         <TextBox Name="AddNewCriminal_LastnameTextBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
                         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
                             <CheckBox Name="AddNewCriminal_IsHeightKnownCheckBox" IsChecked="True"/>
-                            <Slider IsEnabled="{Binding ElementName=AddNewCriminal_IsHeightKnown, Path=IsChecked}" Width="100" Name="AddNewCriminal_HeightSlider" HorizontalAlignment="Stretch" VerticalAlignment="Center" Minimum="0" Maximum="250" SmallChange="1" LargeChange="5" Value="100" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
-                            <TextBox IsEnabled="{Binding ElementName=AddNewCriminal_IsHeightKnown, Path=IsChecked}" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsReadOnly="True" Text="{Binding ElementName=AddNewCriminal_HeightSlider, Path=Value}"/>
+                            <Slider IsEnabled="{Binding ElementName=AddNewCriminal_IsHeightKnownCheckBox, Path=IsChecked}" Width="100" Name="AddNewCriminal_HeightSlider" HorizontalAlignment="Stretch" VerticalAlignment="Center" Minimum="0" Maximum="250" SmallChange="1" LargeChange="5" Value="100" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
+                            <TextBox IsEnabled="{Binding ElementName=AddNewCriminal_IsHeightKnownCheckBox, Path=IsChecked}" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsReadOnly="True" Text="{Binding ElementName=AddNewCriminal_HeightSlider, Path=Value}"/>
                         </StackPanel>
                         <ComboBox Name="AddNewCriminal_EyeColorComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" SelectedIndex="0" Grid.Row="4"/>
                         <ComboBox Name="AddNewCriminal_HairColorComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" SelectedIndex="0" Grid.Row="5"/>
@@ -97,7 +97,7 @@
                     </Grid>
                 </ScrollViewer>
             </Controls:Flyout>
-            <Controls:Flyout Name="AddNewCriminalGroupFlyout" Header="New criminal group" Position="Left" Width="400">
+            <Controls:Flyout Name="AddNewCriminalGroupFlyout" Header="New criminal group" Position="Left" Width="400" IsOpenChanged="Flyout_OnIsOpenChanged">
                 <StackPanel Width="300">
                     <Label>Name</Label>
                     <TextBox Name="AddNewCriminalGroup_NameTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
@@ -106,9 +106,18 @@
                     <Button Name="AddNewCriminalGroup_SubmitButton" Click="AddNewCriminalGroup_SubmitButton_OnClick">Submit</Button>
                 </StackPanel>
             </Controls:Flyout>
-
+            <Controls:Flyout Name="ChangeCriminalGroupFlyout" Header="Change criminal group" Position="Left" Width="400" IsOpenChanged="Flyout_OnIsOpenChanged">
+                <StackPanel Width="300">
+                    <Label>Name</Label>
+                    <TextBox Name="ChangeCriminalGroupFlyout_NameTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                    <Label>Additional data</Label>
+                    <TextBox Name="ChangeCriminalGroupFlyout_AdditionalDataTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                    <Button Name="ChangeCriminalGroupFlyout_SubmitButton" Click="ChangeCriminalGroupFlyout_SubmitButton_OnClick">Submit</Button>
+                </StackPanel>
+            </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
+    
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -187,7 +196,7 @@
                 </Expander>
             </StackPanel>
         </ScrollViewer>
-        <ScrollViewer Grid.Row="0" Grid.Column="1">
+        <ScrollViewer Grid.Row="0" Grid.Column="1" HorizontalScrollBarVisibility="Hidden">
             <StackPanel>
                 <Grid Name="CriminalGroupInformationGrid" MaxHeight="200" Visibility="Collapsed">
                     <Grid.RowDefinitions>
@@ -201,7 +210,9 @@
                         </Label.Effect>
                     </Label>
                     <TextBlock Name="CriminalGroupInformationGrid_Information" TextWrapping="Wrap" Grid.Row="1"  HorizontalAlignment="Center"/>
+                    <Button Name="CriminalGroupInformationGrid_ChangeDataButton" Grid.Row="2" Click="CriminalGroupInformationGrid_ChangeDataButton_OnClick">Change criminal group data</Button>
                 </Grid>
+                
                 <ListBox x:Name="CriminalsListBox" SelectionChanged="CriminalsListBox_OnSelectionChanged" BorderThickness="0" ItemsSource="{Binding CriminalsToShow}" Tag="{Binding Id}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -228,7 +239,7 @@
         </ScrollViewer>
         <StackPanel Name="CriminalActionsStackPanel" Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
             <Button Name="CriminalActions_AddCriminalButton" Click="CriminalActions_AddCriminalButton_OnClick" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100">Add criminal</Button>
-            <Button Name="CriminalActions_OpenProfileButton" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100">Open profile</Button>
+            <Button Name="CriminalActions_OpenProfileButton" Click="CriminalActions_OpenProfileButton_OnClick" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100">Open profile</Button>
             <Button Name="CriminalActions_DeleteCriminalButton" IsEnabled="False" Click="CriminalActions_DeleteCriminalButton_OnClick" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="100">Delete criminal</Button>
         </StackPanel>
     </Grid>

@@ -18,3 +18,5 @@ C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\Interp
 C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\bin\Debug\MahApps.Metro.xml
 C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\obj\Debug\App.baml
 C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\obj\Debug\CriminalProfile.g.cs
+C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\obj\Debug\CriminalProfile.baml

@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MahApps.Metro.Controls.Dialogs;
 using InterpolDatabaseProject.Model;
 
 namespace InterpolDatabaseProject
@@ -28,7 +29,7 @@ namespace InterpolDatabaseProject
         public CriminalsListboxItemData(int id, string forename, string codename, string lastname, int? age, string citizenship, string imageName, Сriminal.CriminalStateOptions state)
         {
             Id = id;
-            TotalName = "#"+ id + " - " + forename + " " + codename + " " + lastname + " AGE: " + ((age == null) ? "-" : age.ToString());
+            TotalName = "#"+ id + " - " + forename + " \"" + codename + "\" " + lastname + " AGE: " + ((age == null) ? "-" : age.ToString());
             Citizenship = citizenship;
             if (!File.Exists("..\\..\\Storage\\Files\\" + imageName))
                 throw new FileNotFoundException();
@@ -58,7 +59,7 @@ namespace InterpolDatabaseProject
         {
             for (int i = 0; i < result.Count; i++)
             {
-                if (selectedItems.Cast<Сriminal.CriminalStateOptions>().All(selectedItem => result[i].State == selectedItem)) continue;
+                if (selectedItems.Cast<Сriminal.CriminalStateOptions>().Any(selectedItem => result[i].State == selectedItem)) continue;
                 result.RemoveAt(i);
                 i--;
             }
@@ -114,9 +115,6 @@ namespace InterpolDatabaseProject
         {
             InitializeComponent();
 
-            Database.AddCriminalGroup(new CriminalGroup("Mafia", "No data about mafia."));
-            Database.AddCriminalGroup(new CriminalGroup("ISIS", "Lots of data: blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah,  blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah, blah."));
-            Database.SaveData();
             Database.RestoreData();
 
             InitializeComponent();
@@ -257,7 +255,7 @@ namespace InterpolDatabaseProject
 
         private void CriminalActions_AddCriminalButton_OnClick(object sender, RoutedEventArgs e) => AddNewCriminalFlyout.IsOpen = true;
 
-        private void AddNewCriminalFlyout_OnIsOpenChanged(object sender, RoutedEventArgs e) => MainGrid.IsEnabled = !MainGrid.IsEnabled;
+        private void Flyout_OnIsOpenChanged(object sender, RoutedEventArgs e) => MainGrid.IsEnabled = !MainGrid.IsEnabled;
 
         private void CriminalActions_DeleteCriminalButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -311,6 +309,37 @@ namespace InterpolDatabaseProject
         private void CriminalGroupsListBox_DeleteGroupButton_OnClick(object sender, RoutedEventArgs e) {
             Database.DeleteCriminalGroup(((KeyValuePair<int, CriminalGroup>)CriminalGroupsListBox.SelectedItem).Key);
             Reload_CriminalGroups();
+        }
+
+        private void CriminalActions_OpenProfileButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            CriminalProfile criminalProfile = new CriminalProfile(Database.Criminals[((CriminalsListboxItemData)CriminalsListBox.SelectedItem).Id]);
+            criminalProfile.ShowDialog();
+            
+        }
+
+        private void CriminalGroupInformationGrid_ChangeDataButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            CriminalGroup selectedCriminalGroup = ((KeyValuePair<int, CriminalGroup>) CriminalGroupsListBox.SelectedItem).Value;
+            ChangeCriminalGroupFlyout_NameTextBox.Text = selectedCriminalGroup.Name;
+            ChangeCriminalGroupFlyout_AdditionalDataTextBox.Text = selectedCriminalGroup.AdditionalData;
+            ChangeCriminalGroupFlyout.IsOpen = true;
+        }
+
+        private void ChangeCriminalGroupFlyout_SubmitButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (ChangeCriminalGroupFlyout_NameTextBox.Text == "")
+            {
+                ChangeCriminalGroupFlyout_NameTextBox.Text = "Required";
+                return;
+            }
+            CriminalGroup selectedCriminalGroup = ((KeyValuePair<int, CriminalGroup>)CriminalGroupsListBox.SelectedItem).Value;
+            selectedCriminalGroup.Name = ChangeCriminalGroupFlyout_NameTextBox.Text;
+            selectedCriminalGroup.AdditionalData = ChangeCriminalGroupFlyout_AdditionalDataTextBox.Text;
+            ChangeCriminalGroupFlyout.IsOpen = false;
+            Reload_CriminalGroups();
+            CriminalGroupInformationGrid_Name.Content = selectedCriminalGroup.Name;
+            CriminalGroupInformationGrid_Information.Text = selectedCriminalGroup.AdditionalData;
         }
     }
 }
