@@ -11,7 +11,7 @@
 
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
-            <controls:Flyout Name="ChangeCriminalFlyout" Header="New criminal" Position="Right" Width="600" IsOpenChanged="ChangeCriminalFlyout_OnIsOpenChanged">
+            <controls:Flyout Name="ChangeCriminalFlyout" Header="Change criminal" Position="Right" Width="600" IsOpenChanged="ChangeCriminalFlyout_OnIsOpenChanged">
                 <ScrollViewer>
                     <Grid>
                         <Grid.Resources>
