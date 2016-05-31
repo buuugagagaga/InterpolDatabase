@@ -113,7 +113,7 @@
                         <ComboBox Name="AddNewCriminal_CurrentStateComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="15" SelectedIndex="0"/>
                         <Button  Click="AddNewCriminal_PickButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="16">Pick file</Button>
                         <TextBlock Grid.Column="1" Grid.Row="17" HorizontalAlignment="Stretch" VerticalAlignment="Center" Name="AddNewCriminal_PhotoFilePath"></TextBlock>
-                        <ComboBox Name="AddNewCriminal_CriminalGroupComboBox" ToolTip="Leave empty if criminal is singleton" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="18"/>
+                        <ComboBox Name="AddNewCriminal_CriminalGroupComboBox" DisplayMemberPath="Value.Name"  ToolTip="Leave empty if criminal is singleton" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="18"/>
                         <ScrollViewer Grid.Column="1" Grid.Row="19" MaxHeight="100">
                             <ListBox Name="AddNewCriminal_ChargesListBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionMode="Multiple"/>
                         </ScrollViewer>
