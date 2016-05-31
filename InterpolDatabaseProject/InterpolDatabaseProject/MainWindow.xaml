@@ -6,11 +6,13 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:interpolDatabaseProject="clr-namespace:InterpolDatabaseProject"
         mc:Ignorable="d"
-        Title="Interpol database" MinHeight="600" Height="600" MinWidth="800" Width="800" Icon="Storage/Files/icon.png"
-        GlowBrush="{DynamicResource AccentColorBrush}" WindowStartupLocation="CenterScreen" Closing="MainWindow_OnClosing">
+        Title="Interpol database" MinHeight="600" Height="600" MinWidth="800" Width="800"
+                       Icon="Storage/Files/icon.png" GlowBrush="{DynamicResource AccentColorBrush}"
+                       WindowStartupLocation="CenterScreen" Closing="MainWindow_OnClosing">
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout Name="AddNewCriminalFlyout" Header="New criminal" Position="Right" Width="600" IsOpenChanged="Flyout_OnIsOpenChanged">
+            <Controls:Flyout Name="AddNewCriminalFlyout" Header="New criminal" Position="Right" 
+                             Width="600" IsOpenChanged="Flyout_OnIsOpenChanged">
                 <ScrollViewer>
                     <Grid>
                         <Grid.Resources>
@@ -66,13 +68,34 @@
                         <Label Grid.Column="0" Grid.Row="19">Charges</Label>
 
 
-                        <TextBox Name="AddNewCriminal_ForenameTextBox"  ToolTip="Leave empty if it is unknown" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
-                        <TextBox Name="AddNewCriminal_CodenameTextBox"  ToolTip="Leave empty if it is unknown" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
-                        <TextBox Name="AddNewCriminal_LastnameTextBox"  ToolTip="Leave empty if it is unknown" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="AddNewCriminal_ForenameTextBox"  
+                                 ToolTip="Leave empty if it is unknown" 
+                                 Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Center">
+                        </TextBox>
+                        <TextBox Name="AddNewCriminal_CodenameTextBox"  
+                                 ToolTip="Leave empty if it is unknown" 
+                                 Grid.Column="1" Grid.Row="1" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center">
+                        </TextBox>
+                        <TextBox Name="AddNewCriminal_LastnameTextBox"  
+                                 ToolTip="Leave empty if it is unknown" 
+                                 Grid.Column="1" Grid.Row="2" 
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Center">
+                        </TextBox>
                         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
                             <CheckBox Name="AddNewCriminal_IsHeightKnownCheckBox" IsChecked="True"/>
-                            <Slider IsEnabled="{Binding ElementName=AddNewCriminal_IsHeightKnownCheckBox, Path=IsChecked}" Width="100" Name="AddNewCriminal_HeightSlider" HorizontalAlignment="Stretch" VerticalAlignment="Center" Minimum="0" Maximum="250" SmallChange="1" LargeChange="5" Value="100" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
-                            <TextBox IsEnabled="{Binding ElementName=AddNewCriminal_IsHeightKnownCheckBox, Path=IsChecked}" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsReadOnly="True" Text="{Binding ElementName=AddNewCriminal_HeightSlider, Path=Value}"/>
+                            <Slider IsEnabled="{Binding ElementName=AddNewCriminal_IsHeightKnownCheckBox,
+                                Path=IsChecked}" Width="100" Name="AddNewCriminal_HeightSlider"
+                                    HorizontalAlignment="Stretch" VerticalAlignment="Center" Minimum="0" 
+                                    Maximum="250" SmallChange="1" LargeChange="5" Value="100" IsSnapToTickEnabled="True"
+                                    TickFrequency="1">
+                            </Slider>
+                            <TextBox IsEnabled="{Binding ElementName=AddNewCriminal_IsHeightKnownCheckBox, Path=IsChecked}"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Center" IsReadOnly="True" 
+                                     Text="{Binding ElementName=AddNewCriminal_HeightSlider, Path=Value}"/>
                         </StackPanel>
                         <ComboBox Name="AddNewCriminal_EyeColorComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" SelectedIndex="0" Grid.Row="4"/>
                         <ComboBox Name="AddNewCriminal_HairColorComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" SelectedIndex="0" Grid.Row="5"/>
@@ -108,13 +131,15 @@
                 </StackPanel>
             </Controls:Flyout>
             <Controls:Flyout Name="ChangeCriminalGroupFlyout" Header="Change criminal group" Position="Left" Width="400" IsOpenChanged="Flyout_OnIsOpenChanged">
-                <StackPanel Width="300">
-                    <Label>Name</Label>
-                    <TextBox Name="ChangeCriminalGroupFlyout_NameTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-                    <Label>Additional data</Label>
-                    <TextBox Name="ChangeCriminalGroupFlyout_AdditionalDataTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                    <Button Name="ChangeCriminalGroupFlyout_SubmitButton" Click="ChangeCriminalGroupFlyout_SubmitButton_OnClick">Submit</Button>
-                </StackPanel>
+                <ScrollViewer>
+                    <StackPanel Width="300">
+                        <Label>Name</Label>
+                        <TextBox Name="ChangeCriminalGroupFlyout_NameTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                        <Label>Additional data</Label>
+                        <TextBox Name="ChangeCriminalGroupFlyout_AdditionalDataTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                        <Button Name="ChangeCriminalGroupFlyout_SubmitButton" Click="ChangeCriminalGroupFlyout_SubmitButton_OnClick">Submit</Button>
+                    </StackPanel>
+                </ScrollViewer>
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
@@ -216,7 +241,9 @@
                             <DropShadowEffect ShadowDepth="0.1"/>
                         </Label.Effect>
                     </Label>
-                    <TextBlock Name="CriminalGroupInformationGrid_Information" TextWrapping="Wrap" Grid.Row="1"  HorizontalAlignment="Center"/>
+                    <ScrollViewer Grid.Row="1">
+                        <TextBlock Name="CriminalGroupInformationGrid_Information"  MaxWidth="500"  TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                    </ScrollViewer>
                     <Button Name="CriminalGroupInformationGrid_ChangeDataButton" Grid.Row="2" Click="CriminalGroupInformationGrid_ChangeDataButton_OnClick">Change criminal group data</Button>
                 </Grid>
                 <ListBox  x:Name="CriminalsListBox" SelectionChanged="CriminalsListBox_OnSelectionChanged" BorderThickness="0" ItemsSource="{Binding CriminalsToShow}" Tag="{Binding Id}">

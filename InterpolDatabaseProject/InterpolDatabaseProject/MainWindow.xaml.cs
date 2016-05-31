@@ -7,124 +7,17 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MahApps.Metro.Controls.Dialogs;
 using InterpolDatabaseProject.Model;
-using MahApps.Metro.Controls.Dialogs;
 
 namespace InterpolDatabaseProject
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public class CriminalsListboxItemData
-    {
-        public int Id { get; set; }
-        public string TotalName { get; }
-        public string Citizenship { get; set; }
-        public BitmapImage Image { get; set; }
-        public Brush TextColor { get; set; }
-        public Сriminal.CriminalStateOptions State { get; set; }
 
-        public CriminalsListboxItemData(int id, string forename, string codename, string lastname, int? age, string citizenship, string imageName, Сriminal.CriminalStateOptions state)
-        {
-            Id = id;
-            TotalName = "#"+ id + " - " + forename + " \"" + codename + "\" " + lastname + " AGE: " + ((age == null) ? "-" : age.ToString());
-            Citizenship = citizenship;
-            if (!File.Exists("..\\..\\Storage\\Files\\" + imageName))
-                throw new FileNotFoundException();
-            Image = new BitmapImage(new Uri(Path.GetFullPath("..\\..\\Storage\\Files\\" + imageName)));
-
-            State = state;
-            switch (state)
-            {
-                case Сriminal.CriminalStateOptions.Busted:
-                    TextColor = Brushes.Yellow;
-                    break;
-                case Сriminal.CriminalStateOptions.Wasted:
-                    TextColor = Brushes.Red;
-                    break; ;
-                case Сriminal.CriminalStateOptions.Wanted:
-                    TextColor = Brushes.White;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
-            }
-        }
-    }
-
-    public static class Filter
-    {
-        public static List<Сriminal> ByState(List<Сriminal> result, IList selectedItems)
-        {
-            for (int i = 0; i < result.Count; i++)
-            {
-                if (selectedItems.Cast<Сriminal.CriminalStateOptions>()
-                    .Any(selectedItem => result[i].State == selectedItem)) continue;
-                result.RemoveAt(i);
-                i--;
-            }
-            return result;
-        }
-
-        public static List<Сriminal> ByForename(List<Сriminal> result, string text)
-            => result.Where(r => r.Forename.ToLower().Contains(text.ToLower())).ToList();
-
-        public static List<Сriminal> ByCodename(List<Сriminal> result, string text)
-            => result.Where(r => r.CodeName.ToLower().Contains(text.ToLower())).ToList();
-
-        public static List<Сriminal> ByLastname(List<Сriminal> result, string text)
-            => result.Where(r => r.Lastname.ToLower().Contains(text.ToLower())).ToList();
-
-        public static List<Сriminal> ByAge(List<Сriminal> result, int lowerValue, int upperValue)
-            => result.Where(r => r.Age >= lowerValue && r.Age <= upperValue).ToList();
-
-        public static List<Сriminal> ByAge(List<Сriminal> result)
-            => result.Where(r => r.Age == null).ToList();
-
-        public static List<Сriminal> ByHeight(List<Сriminal> result, int lowerValue, int upperValue)
-            => result.Where(r => r.Height >= lowerValue && r.Height <= upperValue).ToList();
-
-        public static List<Сriminal> ByHeight(List<Сriminal> result)
-            => result.Where(r => r.Height == null).ToList();
-
-        public static List<Сriminal> ByEyeColor(List<Сriminal> result, Сriminal.EyeColor selectedValue) 
-            => result.Where(r => r.ColorOfEye == selectedValue).ToList();
-
-        public static List<Сriminal> ByHairColor(List<Сriminal> result, Сriminal.HairColor selectedValue)
-            => result.Where(r => r.ColorOfHair == selectedValue).ToList();
-
-        public static List<Сriminal> BySex(List<Сriminal> result, Сriminal.SexOptions selectedValue) 
-            => result.Where(r => r.Sex == selectedValue).ToList();
-
-        public static List<Сriminal> BySpecialSigns(List<Сriminal> result, string text)
-            => result.Where(r => r.SpecialSigns.ToLower().Contains(text.ToLower())).ToList();
-
-        public static List<Сriminal> ByLanguages(List<Сriminal> result, IList selectedItems)
-        {
-            for (int i = 0; i < result.Count; i++)
-            {
-                if (selectedItems.Cast<Сriminal.Language>().All(
-                    selectedItem => result[i].Languages.Contains(selectedItem))) continue;
-                result.RemoveAt(i);
-                i--;
-            }
-            return result;
-        }
-
-        public static List<Сriminal> ByCitizenship(List<Сriminal> result, Сriminal.Country selectedValue) =>
-            result.Where(r=>r.Citizenship == selectedValue).ToList();
-        public static List<Сriminal> ByBirthCountry(List<Сriminal> result, Сriminal.Country selectedValue) =>
-            result.Where(r => r.BirthCountry == selectedValue).ToList();
-        public static List<Сriminal> ByBirthPlace(List<Сriminal> result, string text) =>
-            result.Where(r => r.Birthplace.ToLower().Contains(text.ToLower())).ToList();
-        public static List<Сriminal> ByLastLivingCountry(List<Сriminal> result, Сriminal.Country selectedValue) =>
-            result.Where(r => r.LastLivingCountry == selectedValue).ToList();
-        public static List<Сriminal> ByLastLivingPlace(List<Сriminal> result, string text) =>
-            result.Where(r => r.LastLivingPlace.ToLower().Contains(text.ToLower())).ToList();
-    }
 
     public partial class MainWindow 
     {
@@ -148,7 +41,7 @@ namespace InterpolDatabaseProject
         {
             InitializeComponent();
 
-            //Database.RestoreData();
+            Database.RestoreData();
             InitializeComponent();
             SetDataSources();
             Reload_CriminalsListBox();
@@ -455,6 +348,111 @@ namespace InterpolDatabaseProject
             return dialog.Result;
         }
     }
+}
 
+public class CriminalsListboxItemData
+{
+    public int Id { get; set; }
+    public string TotalName { get; }
+    public string Citizenship { get; set; }
+    public BitmapImage Image { get; set; }
+    public Brush TextColor { get; set; }
+    public Сriminal.CriminalStateOptions State { get; set; }
 
+    public CriminalsListboxItemData(int id, string forename, string codename, string lastname, int? age, string citizenship, string imageName, Сriminal.CriminalStateOptions state)
+    {
+        Id = id;
+        TotalName = "#" + id + " - " + forename + " \"" + codename + "\" " + lastname + " AGE: " + ((age == null) ? "-" : age.ToString());
+        Citizenship = citizenship;
+        if (!File.Exists("..\\..\\Storage\\Files\\" + imageName))
+            throw new FileNotFoundException();
+        Image = new BitmapImage(new Uri(Path.GetFullPath("..\\..\\Storage\\Files\\" + imageName)));
+
+        State = state;
+        switch (state)
+        {
+            case Сriminal.CriminalStateOptions.Busted:
+                TextColor = Brushes.Yellow;
+                break;
+            case Сriminal.CriminalStateOptions.Wasted:
+                TextColor = Brushes.Red;
+                break; ;
+            case Сriminal.CriminalStateOptions.Wanted:
+                TextColor = Brushes.White;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(state), state, null);
+        }
+    }
+}
+
+public static class Filter
+{
+    public static List<Сriminal> ByState(List<Сriminal> result, IList selectedItems)
+    {
+        for (int i = 0; i < result.Count; i++)
+        {
+            if (selectedItems.Cast<Сriminal.CriminalStateOptions>()
+                .Any(selectedItem => result[i].State == selectedItem)) continue;
+            result.RemoveAt(i);
+            i--;
+        }
+        return result;
+    }
+
+    public static List<Сriminal> ByForename(List<Сriminal> result, string text)
+        => result.Where(r => r.Forename.ToLower().Contains(text.ToLower())).ToList();
+
+    public static List<Сriminal> ByCodename(List<Сriminal> result, string text)
+        => result.Where(r => r.CodeName.ToLower().Contains(text.ToLower())).ToList();
+
+    public static List<Сriminal> ByLastname(List<Сriminal> result, string text)
+        => result.Where(r => r.Lastname.ToLower().Contains(text.ToLower())).ToList();
+
+    public static List<Сriminal> ByAge(List<Сriminal> result, int lowerValue, int upperValue)
+        => result.Where(r => r.Age >= lowerValue && r.Age <= upperValue).ToList();
+
+    public static List<Сriminal> ByAge(List<Сriminal> result)
+        => result.Where(r => r.Age == null).ToList();
+
+    public static List<Сriminal> ByHeight(List<Сriminal> result, int lowerValue, int upperValue)
+        => result.Where(r => r.Height >= lowerValue && r.Height <= upperValue).ToList();
+
+    public static List<Сriminal> ByHeight(List<Сriminal> result)
+        => result.Where(r => r.Height == null).ToList();
+
+    public static List<Сriminal> ByEyeColor(List<Сriminal> result, Сriminal.EyeColor selectedValue)
+        => result.Where(r => r.ColorOfEye == selectedValue).ToList();
+
+    public static List<Сriminal> ByHairColor(List<Сriminal> result, Сriminal.HairColor selectedValue)
+        => result.Where(r => r.ColorOfHair == selectedValue).ToList();
+
+    public static List<Сriminal> BySex(List<Сriminal> result, Сriminal.SexOptions selectedValue)
+        => result.Where(r => r.Sex == selectedValue).ToList();
+
+    public static List<Сriminal> BySpecialSigns(List<Сriminal> result, string text)
+        => result.Where(r => r.SpecialSigns.ToLower().Contains(text.ToLower())).ToList();
+
+    public static List<Сriminal> ByLanguages(List<Сriminal> result, IList selectedItems)
+    {
+        for (int i = 0; i < result.Count; i++)
+        {
+            if (selectedItems.Cast<Сriminal.Language>().All(
+                selectedItem => result[i].Languages.Contains(selectedItem))) continue;
+            result.RemoveAt(i);
+            i--;
+        }
+        return result;
+    }
+
+    public static List<Сriminal> ByCitizenship(List<Сriminal> result, Сriminal.Country selectedValue) =>
+        result.Where(r => r.Citizenship == selectedValue).ToList();
+    public static List<Сriminal> ByBirthCountry(List<Сriminal> result, Сriminal.Country selectedValue) =>
+        result.Where(r => r.BirthCountry == selectedValue).ToList();
+    public static List<Сriminal> ByBirthPlace(List<Сriminal> result, string text) =>
+        result.Where(r => r.Birthplace.ToLower().Contains(text.ToLower())).ToList();
+    public static List<Сriminal> ByLastLivingCountry(List<Сriminal> result, Сriminal.Country selectedValue) =>
+        result.Where(r => r.LastLivingCountry == selectedValue).ToList();
+    public static List<Сriminal> ByLastLivingPlace(List<Сriminal> result, string text) =>
+        result.Where(r => r.LastLivingPlace.ToLower().Contains(text.ToLower())).ToList();
 }

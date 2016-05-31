@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:InterpolDatabaseProject"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="Permission required" Height="100" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Permission required" Height="100" Width="300" 
+                      WindowStartupLocation="CenterScreen" 
+                      ResizeMode="NoResize">
     <StackPanel>
         <TextBlock Text="Ask your boss to get a permission" />
         <Button Name="OkButton" Content="I have permission" Click="OkButton_OnClick" />
