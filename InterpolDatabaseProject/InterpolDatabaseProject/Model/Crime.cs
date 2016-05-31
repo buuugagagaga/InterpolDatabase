@@ -24,6 +24,7 @@ namespace InterpolDatabaseProject.Model
             Id = id;
         }
         public static List<string> Crimes { get; set; }
+        public static IReadOnlyCollection<string> ReadOnlyCrimes => Crimes;
         public int Id
         {
             get

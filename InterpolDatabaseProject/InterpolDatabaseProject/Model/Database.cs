@@ -48,6 +48,7 @@ namespace InterpolDatabaseProject.Model
         }
         public static void DeleteCriminal(int id)
         {
+            ////////////////////////////////////////////////
             if(_criminals[id].CriminalGroupMembership!=null)    
                 _criminals[id].UnsetCriminalGroup();
             _criminals.Remove(id);

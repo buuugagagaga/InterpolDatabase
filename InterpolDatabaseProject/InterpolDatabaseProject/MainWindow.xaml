@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:interpolDatabaseProject="clr-namespace:InterpolDatabaseProject"
         mc:Ignorable="d"
         Title="Interpol database" MinHeight="600" Height="600" MinWidth="800" Width="800" Icon="Storage/Files/icon.png"
         GlowBrush="{DynamicResource AccentColorBrush}" WindowStartupLocation="CenterScreen" Closing="MainWindow_OnClosing">
@@ -65,9 +66,9 @@
                         <Label Grid.Column="0" Grid.Row="19">Charges</Label>
 
 
-                        <TextBox Name="AddNewCriminal_ForenameTextBox" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
-                        <TextBox Name="AddNewCriminal_CodenameTextBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
-                        <TextBox Name="AddNewCriminal_LastnameTextBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="AddNewCriminal_ForenameTextBox"  ToolTip="Leave empty if it is unknown" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="AddNewCriminal_CodenameTextBox"  ToolTip="Leave empty if it is unknown" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="AddNewCriminal_LastnameTextBox"  ToolTip="Leave empty if it is unknown" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
                         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
                             <CheckBox Name="AddNewCriminal_IsHeightKnownCheckBox" IsChecked="True"/>
                             <Slider IsEnabled="{Binding ElementName=AddNewCriminal_IsHeightKnownCheckBox, Path=IsChecked}" Width="100" Name="AddNewCriminal_HeightSlider" HorizontalAlignment="Stretch" VerticalAlignment="Center" Minimum="0" Maximum="250" SmallChange="1" LargeChange="5" Value="100" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
@@ -76,20 +77,20 @@
                         <ComboBox Name="AddNewCriminal_EyeColorComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" SelectedIndex="0" Grid.Row="4"/>
                         <ComboBox Name="AddNewCriminal_HairColorComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" SelectedIndex="0" Grid.Row="5"/>
                         <ComboBox Name="AddNewCriminal_SexComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="6" SelectedIndex="0"/>
-                        <TextBox Name="AddNewCriminal_SpecialSignsTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="7" TextWrapping="Wrap"></TextBox>
+                        <TextBox Name="AddNewCriminal_SpecialSignsTextBox"  ToolTip="Leave empty if it is unknown" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="7" TextWrapping="Wrap"></TextBox>
                         <ComboBox Name="AddNewCriminal_CitizenshipComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="8" SelectedIndex="0"/>
                         <ComboBox Name="AddNewCriminal_BirthCountryComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="9" SelectedIndex="0"/>
-                        <TextBox Name="AddNewCriminal_BirthplaceTextBox" Grid.Column="1" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="AddNewCriminal_BirthplaceTextBox"  ToolTip="Leave empty if it is unknown" Grid.Column="1" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
                         <DatePicker Name="AddNewCriminal_BirthdateDatePicker" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="11" ></DatePicker>
                         <ComboBox Name="AddNewCriminal_LastLivingCountryComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="12" SelectedIndex="0"/>
-                        <TextBox Name="AddNewCriminal_LastLivingPlaceTextBox" Grid.Column="1" Grid.Row="13" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="AddNewCriminal_LastLivingPlaceTextBox"  ToolTip="Leave empty if it is unknown" Grid.Column="1" Grid.Row="13" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
                         <ScrollViewer Grid.Column="1" Grid.Row="14" MaxHeight="100">
                             <ListBox Name="AddNewCriminal_LanguagesListBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionMode="Multiple"/>
                         </ScrollViewer>
                         <ComboBox Name="AddNewCriminal_CurrentStateComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="15" SelectedIndex="0"/>
                         <Button  Click="AddNewCriminal_PickButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="16">Pick file</Button>
                         <TextBlock Grid.Column="1" Grid.Row="17" HorizontalAlignment="Stretch" VerticalAlignment="Center" Name="AddNewCriminal_PhotoFilePath"></TextBlock>
-                        <ComboBox Name="AddNewCriminal_CriminalGroupComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="18"/>
+                        <ComboBox Name="AddNewCriminal_CriminalGroupComboBox" ToolTip="Leave empty if criminal is singleton" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="18"/>
                         <ScrollViewer Grid.Column="1" Grid.Row="19" MaxHeight="100">
                             <ListBox Name="AddNewCriminal_ChargesListBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionMode="Multiple"/>
                         </ScrollViewer>
@@ -195,7 +196,7 @@
                             <Button Name="CriminalGroupsListBox_AddGroupButton" Click="CriminalGroupsListBox_AddGroupButton_OnClick" Grid.Column="0" Style="{StaticResource AccentedSquareButtonStyle}">New group</Button>
                             <Button Name="CriminalGroupsListBox_DeleteGroupButton" Click="CriminalGroupsListBox_DeleteGroupButton_OnClick" Grid.Column="1" Style="{StaticResource AccentedSquareButtonStyle}">Delete group</Button>
                         </Grid>
-                        <ListBox Name="CriminalGroupsListBox" SelectionChanged="CriminalGroupsListBox_OnSelectionChanged" MaxHeight="100"/>
+                        <ListBox Name="CriminalGroupsListBox" DisplayMemberPath="Value.Name" SelectionChanged="CriminalGroupsListBox_OnSelectionChanged" MaxHeight="100"/>
                     </StackPanel>
                 </Expander>
             </StackPanel>
@@ -216,7 +217,6 @@
                     <TextBlock Name="CriminalGroupInformationGrid_Information" TextWrapping="Wrap" Grid.Row="1"  HorizontalAlignment="Center"/>
                     <Button Name="CriminalGroupInformationGrid_ChangeDataButton" Grid.Row="2" Click="CriminalGroupInformationGrid_ChangeDataButton_OnClick">Change criminal group data</Button>
                 </Grid>
-                
                 <ListBox  x:Name="CriminalsListBox" SelectionChanged="CriminalsListBox_OnSelectionChanged" BorderThickness="0" ItemsSource="{Binding CriminalsToShow}" Tag="{Binding Id}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>

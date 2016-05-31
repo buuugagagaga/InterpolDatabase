@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MahApps.Metro.Controls.Dialogs;
@@ -211,9 +212,7 @@ namespace InterpolDatabaseProject
 
         private void AddNewCriminal_SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            ///todo:fix govnocode
             List<Language> languages = (from string selectedItem in AddNewCriminal_LanguagesListBox.SelectedItems select new Language(Model.Language.Languages.IndexOf(selectedItem))).ToList();
-            ///todo:fix govnocode
             List<Crime> charges = (from string selectedItem in AddNewCriminal_ChargesListBox.SelectedItems select new Crime(Model.Crime.Crimes.IndexOf(selectedItem))).ToList();
 
             Database.AddCriminal(new Сriminal(

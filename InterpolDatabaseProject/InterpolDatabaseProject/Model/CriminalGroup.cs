@@ -23,7 +23,6 @@ namespace InterpolDatabaseProject.Model
             _members.Add(criminal.Id, criminal);
             criminal.SetCriminalGroup(this);
         }
-
         public void RemoveMember(int id)
         {
             if(!_members.ContainsKey(id)) throw new KeyNotFoundException();

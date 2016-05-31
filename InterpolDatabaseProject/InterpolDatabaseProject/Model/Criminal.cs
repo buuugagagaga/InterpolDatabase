@@ -43,14 +43,14 @@ namespace InterpolDatabaseProject.Model
         #endregion
 
         public void SetCriminalGroup(CriminalGroup criminalGroup) {
-            if (CriminalGroupMembership != null) throw new Exception("CriminalGroup is already set");
+            if (CriminalGroupMembership != null) return;
             if (!criminalGroup.Members.ContainsKey(Id))
                 criminalGroup.AddMember(this);
             else CriminalGroupMembership = criminalGroup;
         }
         public void UnsetCriminalGroup()
         {
-            if(CriminalGroupMembership==null) throw new NullReferenceException("CriminalGroup is already unset");
+            if(CriminalGroupMembership==null) return;
             if (CriminalGroupMembership.Members.ContainsKey(Id))
                 CriminalGroupMembership.RemoveMember(Id);
             else CriminalGroupMembership = null;

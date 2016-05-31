@@ -67,9 +67,9 @@
                         <Label Grid.Column="0" Grid.Row="19">Charges</Label>
 
 
-                        <TextBox Name="ChangeCriminalFlyout_ForenameTextBox" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
-                        <TextBox Name="ChangeCriminalFlyout_CodenameTextBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
-                        <TextBox Name="ChangeCriminalFlyout_LastnameTextBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="ChangeCriminalFlyout_ForenameTextBox"  ToolTip="Leave empty if it is unknown" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="ChangeCriminalFlyout_CodenameTextBox" ToolTip="Leave empty if it is unknown" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="ChangeCriminalFlyout_LastnameTextBox" ToolTip="Leave empty if it is unknown" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
                         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
                             <CheckBox Name="ChangeCriminalFlyout_IsHeightKnownCheckBox" IsChecked="True"/>
                             <Slider IsEnabled="{Binding ElementName=ChangeCriminalFlyout_IsHeightKnownCheckBox, Path=IsChecked}" Width="100" Name="ChangeCriminalFlyout_HeightSlider" HorizontalAlignment="Stretch" VerticalAlignment="Center" Minimum="0" Maximum="250" SmallChange="1" LargeChange="5" Value="100" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
@@ -78,20 +78,20 @@
                         <ComboBox Name="ChangeCriminalFlyout_EyeColorComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" SelectedIndex="0" Grid.Row="4"/>
                         <ComboBox Name="ChangeCriminalFlyout_HairColorComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" SelectedIndex="0" Grid.Row="5"/>
                         <ComboBox Name="ChangeCriminalFlyout_SexComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="6" SelectedIndex="0"/>
-                        <TextBox Name= "ChangeCriminalFlyout_SpecialSignsTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="7" TextWrapping="Wrap"></TextBox>
+                        <TextBox Name= "ChangeCriminalFlyout_SpecialSignsTextBox"  ToolTip="Leave empty if it is unknown" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="7" TextWrapping="Wrap"></TextBox>
                         <ComboBox Name="ChangeCriminalFlyout_CitizenshipComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="8" SelectedIndex="0"/>
                         <ComboBox Name="ChangeCriminalFlyout_BirthCountryComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="9" SelectedIndex="0"/>
-                        <TextBox Name="ChangeCriminalFlyout_BirthplaceTextBox" Grid.Column="1" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="ChangeCriminalFlyout_BirthplaceTextBox"  ToolTip="Leave empty if criminal is singleton" Grid.Column="1" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
                         <DatePicker Name="ChangeCriminalFlyout_BirthdateDatePicker" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="11" ></DatePicker>
                         <ComboBox Name="ChangeCriminalFlyout_LastLivingCountryComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="12" SelectedIndex="0"/>
-                        <TextBox Name="ChangeCriminalFlyout_LastLivingPlaceTextBox" Grid.Column="1" Grid.Row="13" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+                        <TextBox Name="ChangeCriminalFlyout_LastLivingPlaceTextBox" ToolTip="Leave empty if it is unknown" Grid.Column="1" Grid.Row="13" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
                         <ScrollViewer Grid.Column="1" Grid.Row="14" MaxHeight="100">
                             <ListBox Name="ChangeCriminalFlyout_LanguagesListBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionMode="Multiple"/>
                         </ScrollViewer>
                         <ComboBox Name="ChangeCriminalFlyout_CurrentStateComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="15" SelectedIndex="0"/>
                         <Button Name="ChangeCriminalFlyout_PickButton" Click="ChangeCriminalFlyout_PickButton_OnClick" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="16">Pick file</Button>
                         <TextBlock Grid.Column="1" Grid.Row="17" HorizontalAlignment="Stretch" VerticalAlignment="Center" Name="ChangeCriminalFlyout_PhotoFilePath"></TextBlock>
-                        <ComboBox Name="ChangeCriminalFlyout_CriminalGroupComboBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="18"/>
+                        <ComboBox Name="ChangeCriminalFlyout_CriminalGroupComboBox" ToolTip="Leave empty if criminal is singleton" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="18"/>
                         <ScrollViewer Grid.Column="1" Grid.Row="19" MaxHeight="100">
                             <ListBox Name="ChangeCriminalFlyout_ChargesListBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionMode="Multiple"/>
                         </ScrollViewer>

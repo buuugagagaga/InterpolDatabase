@@ -83,10 +83,8 @@ namespace InterpolDatabaseProject
             _criminal.Languages = languages;
             _criminal.Charges = charges;
             _criminal.State = (Сriminal.CriminalStateOptions) ChangeCriminalFlyout_CurrentStateComboBox.SelectedIndex;
-            _criminal.CriminalGroupMembership = (ChangeCriminalFlyout_CriminalGroupComboBox.SelectedIndex == -1)
-                ? null
-                : Database.CriminalGroups[
-                    ((KeyValuePair<int, CriminalGroup>) ChangeCriminalFlyout_CriminalGroupComboBox.SelectedItem).Key];
+            _criminal.UnsetCriminalGroup();
+            if(ChangeCriminalFlyout_CriminalGroupComboBox.SelectedIndex == 0) _criminal.SetCriminalGroup(Database.CriminalGroups[((KeyValuePair<int, CriminalGroup>) ChangeCriminalFlyout_CriminalGroupComboBox.SelectedItem).Key]);
 
             if (ChangeCriminalFlyout_PhotoFilePath.Text != "")
                 Database.ChangeCriminalsPhoto(ChangeCriminalFlyout_PhotoFilePath.Text, _criminal.Id);
