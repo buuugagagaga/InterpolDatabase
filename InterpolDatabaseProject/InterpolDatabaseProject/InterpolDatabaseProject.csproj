@@ -67,6 +67,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DeleteDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -77,6 +81,9 @@
     </Compile>
     <Compile Include="CriminalProfile.xaml.cs">
       <DependentUpon>CriminalProfile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteDialog.xaml.cs">
+      <DependentUpon>DeleteDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Criminal.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -120,8 +127,6 @@
     <Resource Include="Storage\Files\icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Storage\Files\0.jpg" />
-    <Resource Include="Storage\Files\default.jpg" />
     <Resource Include="Storage\Files\default.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

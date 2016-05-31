@@ -19,3 +19,5 @@ C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\Interp
 C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\obj\Debug\InterpolDatabaseProject.csproj.GenerateResource.Cache
 C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\obj\Debug\InterpolDatabaseProject.exe
 C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\obj\Debug\InterpolDatabaseProject.pdb
+C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\obj\Debug\DeleteDialog.g.cs
+C:\Users\daniel\Documents\GitHub\InterpolDatabase\InterpolDatabaseProject\InterpolDatabaseProject\obj\Debug\DeleteDialog.baml

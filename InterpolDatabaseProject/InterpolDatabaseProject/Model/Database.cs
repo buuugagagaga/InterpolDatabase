@@ -33,10 +33,16 @@ namespace InterpolDatabaseProject.Model
         public static void RestoreData()
         {
             BinaryFormatter binFormat = new BinaryFormatter();
-            using (Stream stream = new FileStream("../../Storage/Data/criminals.dat", FileMode.Open, FileAccess.Read, FileShare.None))
-                _criminals = (Dictionary<int, Сriminal>)binFormat.Deserialize(stream);
             using (Stream stream = new FileStream("../../Storage/Data/criminalGroups.dat", FileMode.Open, FileAccess.Read, FileShare.None))
                 _criminalGroups = (Dictionary<int, CriminalGroup>)binFormat.Deserialize(stream);
+            using (Stream stream = new FileStream("../../Storage/Data/criminals.dat", FileMode.Open, FileAccess.Read, FileShare.None))
+                _criminals = (Dictionary<int, Сriminal>)binFormat.Deserialize(stream);
+
+            foreach (var criminal in Criminals)
+            {
+                if(criminal.Value.CriminalGroupMembership!=null)
+                    criminal.Value.SetCriminalGroup(CriminalGroups[criminal.Value.CriminalGroupMembership.Id]);
+            }
         }
         #endregion
         
@@ -48,9 +54,7 @@ namespace InterpolDatabaseProject.Model
         }
         public static void DeleteCriminal(int id)
         {
-            ////////////////////////////////////////////////
-            if(_criminals[id].CriminalGroupMembership!=null)    
-                _criminals[id].UnsetCriminalGroup();
+            _criminals[id].UnsetCriminalGroup();
             _criminals.Remove(id);
         }
 

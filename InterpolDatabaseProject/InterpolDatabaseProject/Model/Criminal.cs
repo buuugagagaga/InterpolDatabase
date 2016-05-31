@@ -28,7 +28,7 @@ namespace InterpolDatabaseProject.Model
         public string LastLivingPlace { get; set; }
         public List<Language> Languages { get; set; }
         public CriminalStateOptions State { get; set; }
-        public CriminalGroup CriminalGroupMembership { get; set; }
+        public CriminalGroup CriminalGroupMembership { get; private set; }
         public string PhotoFileName { get; set; }
         public List<Crime> Charges { get; set; }
         public int? Age
@@ -43,7 +43,7 @@ namespace InterpolDatabaseProject.Model
         #endregion
 
         public void SetCriminalGroup(CriminalGroup criminalGroup) {
-            if (CriminalGroupMembership != null) return;
+            if (CriminalGroupMembership != null) CriminalGroupMembership = null;
             if (!criminalGroup.Members.ContainsKey(Id))
                 criminalGroup.AddMember(this);
             else CriminalGroupMembership = criminalGroup;

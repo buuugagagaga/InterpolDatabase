@@ -120,6 +120,8 @@
     </Controls:MetroWindow.Flyouts>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
+            <Button Name="RightWindowCommands_SaveButton" Click="RightWindowCommands_SaveButton_OnClick" Content="save" />
+            <Button Name="RightWindowCommands_RestoreButton" Click="RightWindowCommands_RestoreButton_OnClick" Content="restore" />
             <Button Name="RightWindowCommands_AboutButton" Click="RightWindowCommands_AboutButton_OnClick" Content="about" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
@@ -194,7 +196,7 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Button Name="CriminalGroupsListBox_AddGroupButton" Click="CriminalGroupsListBox_AddGroupButton_OnClick" Grid.Column="0" Style="{StaticResource AccentedSquareButtonStyle}">New group</Button>
-                            <Button Name="CriminalGroupsListBox_DeleteGroupButton" Click="CriminalGroupsListBox_DeleteGroupButton_OnClick" Grid.Column="1" Style="{StaticResource AccentedSquareButtonStyle}">Delete group</Button>
+                            <Button Name="CriminalGroupsListBox_DeleteGroupButton" IsEnabled="False" Click="CriminalGroupsListBox_DeleteGroupButton_OnClick" Grid.Column="1" Style="{StaticResource AccentedSquareButtonStyle}">Delete group</Button>
                         </Grid>
                         <ListBox Name="CriminalGroupsListBox" DisplayMemberPath="Value.Name" SelectionChanged="CriminalGroupsListBox_OnSelectionChanged" MaxHeight="100"/>
                     </StackPanel>

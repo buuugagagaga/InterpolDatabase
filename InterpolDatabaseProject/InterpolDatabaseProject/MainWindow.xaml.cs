@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MahApps.Metro.Controls.Dialogs;
 using InterpolDatabaseProject.Model;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace InterpolDatabaseProject
 {
@@ -147,7 +148,7 @@ namespace InterpolDatabaseProject
         {
             InitializeComponent();
 
-            Database.RestoreData();
+            //Database.RestoreData();
             InitializeComponent();
             SetDataSources();
             Reload_CriminalsListBox();
@@ -299,12 +300,40 @@ namespace InterpolDatabaseProject
             Database.SaveData();
         }
 
-        private void CriminalActions_AddCriminalButton_OnClick(object sender, RoutedEventArgs e) => AddNewCriminalFlyout.IsOpen = true;
+        private void CriminalActions_AddCriminalButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ClearAddCriminalFlyout();
+            AddNewCriminalFlyout.IsOpen = true;
+        }
 
-        private void Flyout_OnIsOpenChanged(object sender, RoutedEventArgs e) => MainGrid.IsEnabled = !MainGrid.IsEnabled;
+        private void ClearAddCriminalFlyout()
+        {
+            AddNewCriminal_BirthdateDatePicker.SelectedDate = null;
+            AddNewCriminal_LanguagesListBox.UnselectAll();
+            AddNewCriminal_BirthCountryComboBox.SelectedIndex = 0;
+            AddNewCriminal_BirthplaceTextBox.Text = "";
+            AddNewCriminal_ChargesListBox.UnselectAll();
+            AddNewCriminal_CitizenshipComboBox.SelectedIndex = 0;
+            AddNewCriminal_CodenameTextBox.Text = "";
+            AddNewCriminal_CriminalGroupComboBox.SelectedIndex = -1;
+            AddNewCriminal_CurrentStateComboBox.SelectedIndex = 0;
+            AddNewCriminal_EyeColorComboBox.SelectedIndex = 0;
+            AddNewCriminal_HairColorComboBox.SelectedIndex = 0;
+            AddNewCriminal_ForenameTextBox.Text = "";
+            AddNewCriminal_LastnameTextBox.Text = "";
+            AddNewCriminal_SpecialSignsTextBox.Text = "";
+            AddNewCriminal_LastLivingCountryComboBox.SelectedIndex = 0;
+            AddNewCriminal_LastLivingPlaceTextBox.Text = "";
+            AddNewCriminal_SexComboBox.SelectedIndex = 0;
+            AddNewCriminal_PhotoFilePath.Text = "";
+        }
+
+        private void Flyout_OnIsOpenChanged(object sender, RoutedEventArgs e) 
+            => MainGrid.IsEnabled = !MainGrid.IsEnabled;
 
         private void CriminalActions_DeleteCriminalButton_OnClick(object sender, RoutedEventArgs e)
         {
+            if(!AskPermissionToDelete()) return;
             Database.DeleteCriminal(((CriminalsListboxItemData)CriminalsListBox.SelectedItem).Id);
             Reload_CriminalsListBox();
         }
@@ -316,7 +345,8 @@ namespace InterpolDatabaseProject
 
         private void Filter_ControlValueChanged(object sender, object e) => Reload_CriminalsListBox();
 
-        private void Filter_ShowAllCriminals_OnClick(object sender, RoutedEventArgs e) => CriminalGroupsListBox.UnselectAll();
+        private void Filter_ShowAllCriminals_OnClick(object sender, RoutedEventArgs e) 
+            => CriminalGroupsListBox.UnselectAll();
 
         private void CriminalGroupsListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -337,7 +367,17 @@ namespace InterpolDatabaseProject
             Reload_CriminalsListBox();
         }
 
-        private void CriminalGroupsListBox_AddGroupButton_OnClick(object sender, RoutedEventArgs e) => AddNewCriminalGroupFlyout.IsOpen = true;
+        private void CriminalGroupsListBox_AddGroupButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ClearAddNewCriminalGroupFlyout();
+            AddNewCriminalGroupFlyout.IsOpen = true;
+        }
+
+        private void ClearAddNewCriminalGroupFlyout()
+        {
+            AddNewCriminalGroup_NameTextBox.Text = "";
+            AddNewCriminalGroup_AdditionalDataTextBox.Text = "";
+        }
 
         private void AddNewCriminalGroup_SubmitButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -353,13 +393,15 @@ namespace InterpolDatabaseProject
         }
         
         private void CriminalGroupsListBox_DeleteGroupButton_OnClick(object sender, RoutedEventArgs e) {
+            if (!AskPermissionToDelete()) return;
             Database.DeleteCriminalGroup(((KeyValuePair<int, CriminalGroup>)CriminalGroupsListBox.SelectedItem).Key);
             Reload_CriminalGroups();
         }
 
         private void CriminalActions_OpenProfileButton_OnClick(object sender, RoutedEventArgs e)
         {
-            CriminalProfile criminalProfile = new CriminalProfile(Database.Criminals[((CriminalsListboxItemData)CriminalsListBox.SelectedItem).Id]);
+            CriminalProfile criminalProfile = new CriminalProfile(
+                Database.Criminals[((CriminalsListboxItemData)CriminalsListBox.SelectedItem).Id]);
             criminalProfile.ShowDialog();
             Reload_CriminalsListBox();
         }
@@ -395,7 +437,23 @@ namespace InterpolDatabaseProject
                 "Картотека Интерпола.\n\n"+"Данные по каждому зарегистрированному преступнику: фамилия, имя, кличка, рост, цвет волос, цвет глаз, особые приметы, гражданство, место и дата рождения, последнее место жительства, знание языков, преступная профессия, последнее дело и так далее. Преступные и мафиозные группировки(данные о подельщиках). Выборка по любому подмножеству признаков. Перенос «завязавших» в архив; удаление –только после смерти.",
                 MessageDialogStyle.Affirmative);
         }
-        
+
+        private void RightWindowCommands_SaveButton_OnClick(object sender, RoutedEventArgs e)
+            => Database.SaveData();
+
+        private void RightWindowCommands_RestoreButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Database.RestoreData();
+            Reload_CriminalsListBox();
+            Reload_CriminalGroups();
+        }
+
+        private bool AskPermissionToDelete()
+        {
+            DeleteDialog dialog = new DeleteDialog();
+            dialog.ShowDialog();
+            return dialog.Result;
+        }
     }
 
 

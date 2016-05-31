@@ -84,7 +84,7 @@ namespace InterpolDatabaseProject
             _criminal.Charges = charges;
             _criminal.State = (Сriminal.CriminalStateOptions) ChangeCriminalFlyout_CurrentStateComboBox.SelectedIndex;
             _criminal.UnsetCriminalGroup();
-            if(ChangeCriminalFlyout_CriminalGroupComboBox.SelectedIndex == 0)
+            if(ChangeCriminalFlyout_CriminalGroupComboBox.SelectedIndex != -1)
                 _criminal.SetCriminalGroup(Database.CriminalGroups[
                     ((KeyValuePair<int, CriminalGroup>) ChangeCriminalFlyout_CriminalGroupComboBox.SelectedItem).Key]);
 
