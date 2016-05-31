@@ -60,38 +60,69 @@ namespace InterpolDatabaseProject
         {
             for (int i = 0; i < result.Count; i++)
             {
-                if (selectedItems.Cast<Сriminal.CriminalStateOptions>().Any(selectedItem => result[i].State == selectedItem)) continue;
+                if (selectedItems.Cast<Сriminal.CriminalStateOptions>()
+                    .Any(selectedItem => result[i].State == selectedItem)) continue;
                 result.RemoveAt(i);
                 i--;
             }
             return result;
         }
-        public static List<Сriminal> ByForename(List<Сriminal> result, string text) => result.Where(r => r.Forename.ToLower().Contains(text.ToLower())).ToList();
-        public static List<Сriminal> ByCodename(List<Сriminal> result, string text) => result.Where(r => r.CodeName.ToLower().Contains(text.ToLower())).ToList();
-        public static List<Сriminal> ByLastname(List<Сriminal> result, string text) => result.Where(r => r.Lastname.ToLower().Contains(text.ToLower())).ToList();
-        public static List<Сriminal> ByAge(List<Сriminal> result, int lowerValue, int upperValue) => result.Where(r => r.Age >= lowerValue && r.Age <= upperValue).ToList();
-        public static List<Сriminal> ByAge(List<Сriminal> result) => result.Where(r => r.Age == null).ToList();
-        public static List<Сriminal> ByHeight(List<Сriminal> result, int lowerValue, int upperValue) => result.Where(r => r.Height >= lowerValue && r.Height <= upperValue).ToList();
-        public static List<Сriminal> ByHeight(List<Сriminal> result) => result.Where(r => r.Height == null).ToList();
-        public static List<Сriminal> ByEyeColor(List<Сriminal> result, int id) => result.Where(r => r.ColorOfEye.Id == id).ToList();
-        public static List<Сriminal> ByHairColor(List<Сriminal> result, int id) => result.Where(r => r.ColorOfHair.Id == id).ToList();
-        public static List<Сriminal> BySex(List<Сriminal> result, string selectedValue) => result.Where(r => r.Sex.ToString() == selectedValue).ToList();
-        public static List<Сriminal> BySpecialSigns(List<Сriminal> result, string text) => result.Where(r => r.SpecialSigns.ToLower().Contains(text.ToLower())).ToList();
+
+        public static List<Сriminal> ByForename(List<Сriminal> result, string text)
+            => result.Where(r => r.Forename.ToLower().Contains(text.ToLower())).ToList();
+
+        public static List<Сriminal> ByCodename(List<Сriminal> result, string text)
+            => result.Where(r => r.CodeName.ToLower().Contains(text.ToLower())).ToList();
+
+        public static List<Сriminal> ByLastname(List<Сriminal> result, string text)
+            => result.Where(r => r.Lastname.ToLower().Contains(text.ToLower())).ToList();
+
+        public static List<Сriminal> ByAge(List<Сriminal> result, int lowerValue, int upperValue)
+            => result.Where(r => r.Age >= lowerValue && r.Age <= upperValue).ToList();
+
+        public static List<Сriminal> ByAge(List<Сriminal> result)
+            => result.Where(r => r.Age == null).ToList();
+
+        public static List<Сriminal> ByHeight(List<Сriminal> result, int lowerValue, int upperValue)
+            => result.Where(r => r.Height >= lowerValue && r.Height <= upperValue).ToList();
+
+        public static List<Сriminal> ByHeight(List<Сriminal> result)
+            => result.Where(r => r.Height == null).ToList();
+
+        public static List<Сriminal> ByEyeColor(List<Сriminal> result, Сriminal.EyeColor selectedValue) 
+            => result.Where(r => r.ColorOfEye == selectedValue).ToList();
+
+        public static List<Сriminal> ByHairColor(List<Сriminal> result, Сriminal.HairColor selectedValue)
+            => result.Where(r => r.ColorOfHair == selectedValue).ToList();
+
+        public static List<Сriminal> BySex(List<Сriminal> result, Сriminal.SexOptions selectedValue) 
+            => result.Where(r => r.Sex == selectedValue).ToList();
+
+        public static List<Сriminal> BySpecialSigns(List<Сriminal> result, string text)
+            => result.Where(r => r.SpecialSigns.ToLower().Contains(text.ToLower())).ToList();
+
         public static List<Сriminal> ByLanguages(List<Сriminal> result, IList selectedItems)
         {
             for (int i = 0; i < result.Count; i++)
             {
-                if (selectedItems.Cast<string>().All(selectedItem => result[i].Languages.Contains(new Language(Model.Language.Languages.IndexOf(selectedItem))))) continue;
+                if (selectedItems.Cast<Сriminal.Language>().All(
+                    selectedItem => result[i].Languages.Contains(selectedItem))) continue;
                 result.RemoveAt(i);
                 i--;
             }
             return result;
         }
-        public static List<Сriminal> ByCitizenship(List<Сriminal> result, int id) => result.Where(r=>r.Citizenship.Id == id).ToList();
-        public static List<Сriminal> ByBirthCountry(List<Сriminal> result, int id) => result.Where(r => r.BirthCountry.Id == id).ToList();
-        public static List<Сriminal> ByBirthPlace(List<Сriminal> result, string text) => result.Where(r => r.Birthplace.ToLower().Contains(text.ToLower())).ToList();
-        public static List<Сriminal> ByLastLivingCountry(List<Сriminal> result, int id) => result.Where(r => r.LastLivingCountry.Id == id).ToList();
-        public static List<Сriminal> ByLastLivingPlace(List<Сriminal> result, string text) => result.Where(r => r.LastLivingPlace.ToLower().Contains(text.ToLower())).ToList();
+
+        public static List<Сriminal> ByCitizenship(List<Сriminal> result, Сriminal.Country selectedValue) =>
+            result.Where(r=>r.Citizenship == selectedValue).ToList();
+        public static List<Сriminal> ByBirthCountry(List<Сriminal> result, Сriminal.Country selectedValue) =>
+            result.Where(r => r.BirthCountry == selectedValue).ToList();
+        public static List<Сriminal> ByBirthPlace(List<Сriminal> result, string text) =>
+            result.Where(r => r.Birthplace.ToLower().Contains(text.ToLower())).ToList();
+        public static List<Сriminal> ByLastLivingCountry(List<Сriminal> result, Сriminal.Country selectedValue) =>
+            result.Where(r => r.LastLivingCountry == selectedValue).ToList();
+        public static List<Сriminal> ByLastLivingPlace(List<Сriminal> result, string text) =>
+            result.Where(r => r.LastLivingPlace.ToLower().Contains(text.ToLower())).ToList();
     }
 
     public partial class MainWindow 
@@ -117,7 +148,6 @@ namespace InterpolDatabaseProject
             InitializeComponent();
 
             Database.RestoreData();
-
             InitializeComponent();
             SetDataSources();
             Reload_CriminalsListBox();
@@ -144,15 +174,15 @@ namespace InterpolDatabaseProject
             else if (Filter_HeightRangeSlider.LowerValue > Filter_HeightRangeSlider.Minimum || Filter_HeightRangeSlider.UpperValue < Filter_HeightRangeSlider.Maximum)
                 result = Filter.ByHeight(result, (int)Filter_HeightRangeSlider.LowerValue, (int)Filter_HeightRangeSlider.UpperValue);
 
-            if (Filter_EyeColorCombobox.SelectedIndex != -1) result = Filter.ByEyeColor(result, Filter_EyeColorCombobox.SelectedIndex);
-            if (Filter_HairColorCombobox.SelectedIndex != -1) result = Filter.ByHairColor(result, Filter_HairColorCombobox.SelectedIndex);
-            if (Filter_SexCombobox.SelectedIndex != -1) result = Filter.BySex(result, Filter_SexCombobox.SelectedValue.ToString());
+            if (Filter_EyeColorCombobox.SelectedIndex != -1) result = Filter.ByEyeColor(result, (Сriminal.EyeColor)Filter_EyeColorCombobox.SelectedItem);
+            if (Filter_HairColorCombobox.SelectedIndex != -1) result = Filter.ByHairColor(result, (Сriminal.HairColor)Filter_HairColorCombobox.SelectedItem);
+            if (Filter_SexCombobox.SelectedIndex != -1) result = Filter.BySex(result, (Сriminal.SexOptions)Filter_SexCombobox.SelectedItem);
             if (Filter_SpecialSignsTextbox.Text != "") result = Filter.BySpecialSigns(result, Filter_SpecialSignsTextbox.Text);
             if (Filter_LanguagesListbox.SelectedItems.Count > 0) result = Filter.ByLanguages(result, Filter_LanguagesListbox.SelectedItems);
-            if (Filter_CitizenshipComboBox.SelectedIndex != -1) result = Filter.ByCitizenship(result, Filter_CitizenshipComboBox.SelectedIndex);
-            if (Filter_BirthCountryComboBox.SelectedIndex != -1) result = Filter.ByBirthCountry(result, Filter_BirthCountryComboBox.SelectedIndex);
+            if (Filter_CitizenshipComboBox.SelectedIndex != -1) result = Filter.ByCitizenship(result, (Сriminal.Country)Filter_CitizenshipComboBox.SelectedItem);
+            if (Filter_BirthCountryComboBox.SelectedIndex != -1) result = Filter.ByBirthCountry(result, (Сriminal.Country)Filter_BirthCountryComboBox.SelectedItem);
             if(Filter_PlaceOfBirthTextBox.Text != "") result = Filter.ByBirthPlace(result, Filter_PlaceOfBirthTextBox.Text);
-            if (Filter_LastLivingCountryComboBox.SelectedIndex != -1) result = Filter.ByLastLivingCountry(result, Filter_LastLivingCountryComboBox.SelectedIndex);
+            if (Filter_LastLivingCountryComboBox.SelectedIndex != -1) result = Filter.ByLastLivingCountry(result, (Сriminal.Country)Filter_LastLivingCountryComboBox.SelectedItem);
             if (Filter_LastLivingPlaceTextBox.Text != "") result = Filter.ByLastLivingPlace(result, Filter_LastLivingPlaceTextBox.Text);
             
             return result;
@@ -160,26 +190,41 @@ namespace InterpolDatabaseProject
 
         private void SetDataSources()
         {
-            AddNewCriminal_EyeColorComboBox.ItemsSource = EyeColor.EyeColors;
-            AddNewCriminal_HairColorComboBox.ItemsSource = HairColor.HairColors;
+            AddNewCriminal_EyeColorComboBox.ItemsSource = 
+                Enum.GetValues(typeof(Сriminal.EyeColor)).Cast<Сriminal.EyeColor>();
+            AddNewCriminal_HairColorComboBox.ItemsSource =
+                Enum.GetValues(typeof(Сriminal.HairColor)).Cast<Сriminal.HairColor>();
             AddNewCriminal_SexComboBox.ItemsSource =
                 Enum.GetValues(typeof(Сriminal.SexOptions)).Cast<Сriminal.SexOptions>();
-            AddNewCriminal_CitizenshipComboBox.ItemsSource = Country.Countries;
-            AddNewCriminal_BirthCountryComboBox.ItemsSource = Country.Countries;
-            AddNewCriminal_LastLivingCountryComboBox.ItemsSource = Country.Countries;
+            AddNewCriminal_CitizenshipComboBox.ItemsSource =
+                Enum.GetValues(typeof(Сriminal.Country)).Cast<Сriminal.Country>();
+            AddNewCriminal_BirthCountryComboBox.ItemsSource =
+                Enum.GetValues(typeof(Сriminal.Country)).Cast<Сriminal.Country>();
+            AddNewCriminal_LastLivingCountryComboBox.ItemsSource = 
+                Enum.GetValues(typeof(Сriminal.Country)).Cast<Сriminal.Country>();
             AddNewCriminal_CurrentStateComboBox.ItemsSource =
                 Enum.GetValues(typeof(Сriminal.CriminalStateOptions)).Cast<Сriminal.CriminalStateOptions>();
-            AddNewCriminal_LanguagesListBox.ItemsSource = Model.Language.Languages;
-            AddNewCriminal_ChargesListBox.ItemsSource = Crime.Crimes;
+            AddNewCriminal_LanguagesListBox.ItemsSource =
+                Enum.GetValues(typeof(Сriminal.Language)).Cast<Сriminal.Language>();
+            AddNewCriminal_ChargesListBox.ItemsSource =
+                Enum.GetValues(typeof(Сriminal.Crime)).Cast<Сriminal.Crime>(); ;
 
-            Filter_EyeColorCombobox.ItemsSource = EyeColor.EyeColors;
-            Filter_HairColorCombobox.ItemsSource = HairColor.HairColors;
-            Filter_SexCombobox.ItemsSource = Enum.GetValues(typeof(Сriminal.SexOptions)).Cast<Сriminal.SexOptions>();
-            Filter_LanguagesListbox.ItemsSource = Model.Language.Languages;
-            Filter_CitizenshipComboBox.ItemsSource = Country.Countries;
-            Filter_BirthCountryComboBox.ItemsSource = Country.Countries;
-            Filter_LastLivingCountryComboBox.ItemsSource = Country.Countries;
-            Filter_StateListBox.ItemsSource = Enum.GetValues(typeof(Сriminal.CriminalStateOptions)).Cast<Сriminal.CriminalStateOptions>();
+            Filter_EyeColorCombobox.ItemsSource = 
+                Enum.GetValues(typeof(Сriminal.EyeColor)).Cast<Сriminal.EyeColor>();
+            Filter_HairColorCombobox.ItemsSource = 
+                Enum.GetValues(typeof(Сriminal.HairColor)).Cast<Сriminal.HairColor>();
+            Filter_SexCombobox.ItemsSource = 
+                Enum.GetValues(typeof(Сriminal.SexOptions)).Cast<Сriminal.SexOptions>();
+            Filter_LanguagesListbox.ItemsSource = 
+                Enum.GetValues(typeof(Сriminal.Language)).Cast<Сriminal.Language>();
+            Filter_CitizenshipComboBox.ItemsSource = 
+                Enum.GetValues(typeof(Сriminal.Country)).Cast<Сriminal.Country>();
+            Filter_BirthCountryComboBox.ItemsSource = 
+                Enum.GetValues(typeof(Сriminal.Country)).Cast<Сriminal.Country>();
+            Filter_LastLivingCountryComboBox.ItemsSource = 
+                Enum.GetValues(typeof(Сriminal.Country)).Cast<Сriminal.Country>();
+            Filter_StateListBox.ItemsSource = 
+                Enum.GetValues(typeof(Сriminal.CriminalStateOptions)).Cast<Сriminal.CriminalStateOptions>();
         }
 
         private void Reload_CriminalsListBox()
@@ -212,30 +257,32 @@ namespace InterpolDatabaseProject
 
         private void AddNewCriminal_SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Language> languages = (from string selectedItem in AddNewCriminal_LanguagesListBox.SelectedItems select new Language(Model.Language.Languages.IndexOf(selectedItem))).ToList();
-            List<Crime> charges = (from string selectedItem in AddNewCriminal_ChargesListBox.SelectedItems select new Crime(Model.Crime.Crimes.IndexOf(selectedItem))).ToList();
+
+            List<Сriminal.Language> languages = AddNewCriminal_LanguagesListBox.SelectedItems.Cast<Сriminal.Language>().ToList();
+            List<Сriminal.Crime> charges = AddNewCriminal_ChargesListBox.SelectedItems.Cast<Сriminal.Crime>().ToList();
 
             Database.AddCriminal(new Сriminal(
                 AddNewCriminal_LastnameTextBox.Text,
                 AddNewCriminal_ForenameTextBox.Text,
                 AddNewCriminal_CodenameTextBox.Text,
-                (AddNewCriminal_IsHeightKnownCheckBox.IsChecked.Value) ? (int?)AddNewCriminal_HeightSlider.Value : null,
-                new EyeColor(AddNewCriminal_EyeColorComboBox.SelectedIndex),
-                new HairColor(AddNewCriminal_HairColorComboBox.SelectedIndex),
-                (Сriminal.SexOptions)AddNewCriminal_SexComboBox.SelectedIndex,
+                AddNewCriminal_IsHeightKnownCheckBox.IsChecked.Value ? (int?)AddNewCriminal_HeightSlider.Value : null,
+                (Сriminal.EyeColor)AddNewCriminal_EyeColorComboBox.SelectedItem,
+                (Сriminal.HairColor)AddNewCriminal_HairColorComboBox.SelectedItem,
+                (Сriminal.SexOptions)AddNewCriminal_SexComboBox.SelectedItem,
                 AddNewCriminal_SpecialSignsTextBox.Text,
-                new Country(AddNewCriminal_CitizenshipComboBox.SelectedIndex),
-                new Country(AddNewCriminal_BirthCountryComboBox.SelectedIndex),
+                (Сriminal.Country)AddNewCriminal_CitizenshipComboBox.SelectedItem,
+                (Сriminal.Country)AddNewCriminal_BirthCountryComboBox.SelectedItem,
                 AddNewCriminal_BirthplaceTextBox.Text,
                 AddNewCriminal_BirthdateDatePicker.SelectedDate,
-                new Country(AddNewCriminal_LastLivingCountryComboBox.SelectedIndex),
+                (Сriminal.Country)AddNewCriminal_LastLivingCountryComboBox.SelectedItem,
                 AddNewCriminal_LastLivingPlaceTextBox.Text,
                 languages,
-                (Сriminal.CriminalStateOptions)AddNewCriminal_CurrentStateComboBox.SelectedIndex,
+                (Сriminal.CriminalStateOptions)AddNewCriminal_CurrentStateComboBox.SelectedItem,
                 null,
                 (AddNewCriminal_CriminalGroupComboBox.SelectedIndex == -1)
                     ? null
-                    : Database.CriminalGroups[((KeyValuePair<int,CriminalGroup>)AddNewCriminal_CriminalGroupComboBox.SelectedItem).Key],
+                    : Database.CriminalGroups[((KeyValuePair<int,CriminalGroup>)
+                        AddNewCriminal_CriminalGroupComboBox.SelectedItem).Key],
                 charges
                 )
                 );
@@ -350,4 +397,6 @@ namespace InterpolDatabaseProject
         }
         
     }
+
+
 }

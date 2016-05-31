@@ -122,6 +122,47 @@ namespace InterpolDatabaseProject.Model
             Busted,
             Wasted
         }
+        public enum Crime
+        {
+            Robbery,
+            Murder,
+            Terrorism
+        }
+        public enum Country
+        {
+            Unknown,
+            USA,
+            Ukraine,
+            Russia,
+            China,
+            Columbia
+        }
+
+        public enum EyeColor
+        {
+            Unknown,
+            Black,
+            Brown,
+            Red,
+            Gray
+        }
+        public enum HairColor
+        {
+            Unknown,
+            Black,
+            Brown,
+            Red,
+            Gray,
+            Bold
+        }
+        public enum Language
+        {
+            English,
+            Russian,
+            Ukrainian,
+            Spanish,
+            French
+        }
         #endregion
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)

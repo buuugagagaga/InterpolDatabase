@@ -63,28 +63,30 @@ namespace InterpolDatabaseProject
         
         private void ChangeCriminalFlyout_SubmitButton_OnClick(object sender, RoutedEventArgs e)
         {
-            List<Language> languages = (from string selectedItem in ChangeCriminalFlyout_LanguagesListBox.SelectedItems select new Language(Model.Language.Languages.IndexOf(selectedItem))).ToList();
-            List<Crime> charges = (from string selectedItem in ChangeCriminalFlyout_ChargesListBox.SelectedItems select new Crime(Crime.Crimes.IndexOf(selectedItem))).ToList();
+            List<Сriminal.Language> languages = ChangeCriminalFlyout_LanguagesListBox.SelectedItems.Cast<Сriminal.Language>().ToList();
+            List<Сriminal.Crime> charges = ChangeCriminalFlyout_ChargesListBox.SelectedItems.Cast<Сriminal.Crime>().ToList();
 
             _criminal.Lastname = ChangeCriminalFlyout_LastnameTextBox.Text;
             _criminal.Forename = ChangeCriminalFlyout_ForenameTextBox.Text;
             _criminal.CodeName = ChangeCriminalFlyout_CodenameTextBox.Text;
             _criminal.Height = (ChangeCriminalFlyout_IsHeightKnownCheckBox.IsChecked.Value) ? (int?) ChangeCriminalFlyout_HeightSlider.Value : null;
-            _criminal.ColorOfEye = new EyeColor(ChangeCriminalFlyout_EyeColorComboBox.SelectedIndex);
-            _criminal.ColorOfHair = new HairColor(ChangeCriminalFlyout_HairColorComboBox.SelectedIndex);
-            _criminal.Sex = (Сriminal.SexOptions) ChangeCriminalFlyout_SexComboBox.SelectedIndex;
+            _criminal.ColorOfEye = (Сriminal.EyeColor)ChangeCriminalFlyout_EyeColorComboBox.SelectedItem;
+            _criminal.ColorOfHair = (Сriminal.HairColor)ChangeCriminalFlyout_HairColorComboBox.SelectedItem;
+            _criminal.Sex = (Сriminal.SexOptions) ChangeCriminalFlyout_SexComboBox.SelectedItem;
             _criminal.SpecialSigns = ChangeCriminalFlyout_SpecialSignsTextBox.Text;
-            _criminal.Citizenship = new Country(ChangeCriminalFlyout_CitizenshipComboBox.SelectedIndex);
-            _criminal.BirthCountry = new Country(ChangeCriminalFlyout_BirthCountryComboBox.SelectedIndex);
+            _criminal.Citizenship = (Сriminal.Country)ChangeCriminalFlyout_CitizenshipComboBox.SelectedItem;
+            _criminal.BirthCountry = (Сriminal.Country)ChangeCriminalFlyout_BirthCountryComboBox.SelectedItem;
             _criminal.Birthplace = ChangeCriminalFlyout_BirthplaceTextBox.Text;
             _criminal.Birthdate = ChangeCriminalFlyout_BirthdateDatePicker.SelectedDate;
-            _criminal.LastLivingCountry = new Country(ChangeCriminalFlyout_LastLivingCountryComboBox.SelectedIndex);
+            _criminal.LastLivingCountry = (Сriminal.Country)ChangeCriminalFlyout_LastLivingCountryComboBox.SelectedIndex;
             _criminal.LastLivingPlace = ChangeCriminalFlyout_LastLivingPlaceTextBox.Text;
             _criminal.Languages = languages;
             _criminal.Charges = charges;
             _criminal.State = (Сriminal.CriminalStateOptions) ChangeCriminalFlyout_CurrentStateComboBox.SelectedIndex;
             _criminal.UnsetCriminalGroup();
-            if(ChangeCriminalFlyout_CriminalGroupComboBox.SelectedIndex == 0) _criminal.SetCriminalGroup(Database.CriminalGroups[((KeyValuePair<int, CriminalGroup>) ChangeCriminalFlyout_CriminalGroupComboBox.SelectedItem).Key]);
+            if(ChangeCriminalFlyout_CriminalGroupComboBox.SelectedIndex == 0)
+                _criminal.SetCriminalGroup(Database.CriminalGroups[
+                    ((KeyValuePair<int, CriminalGroup>) ChangeCriminalFlyout_CriminalGroupComboBox.SelectedItem).Key]);
 
             if (ChangeCriminalFlyout_PhotoFilePath.Text != "")
                 Database.ChangeCriminalsPhoto(ChangeCriminalFlyout_PhotoFilePath.Text, _criminal.Id);
@@ -121,21 +123,21 @@ namespace InterpolDatabaseProject
             ChangeCriminalFlyout_CodenameTextBox.Text = _criminal.CodeName;
             ChangeCriminalFlyout_LastnameTextBox.Text = _criminal.Lastname;
             ChangeCriminalFlyout_HeightSlider.Value = _criminal.Height ?? 0;
-            ChangeCriminalFlyout_EyeColorComboBox.SelectedIndex = _criminal.ColorOfEye.Id;
-            ChangeCriminalFlyout_HairColorComboBox.SelectedIndex = _criminal.ColorOfHair.Id;
+            ChangeCriminalFlyout_EyeColorComboBox.SelectedIndex = (int)_criminal.ColorOfEye;
+            ChangeCriminalFlyout_HairColorComboBox.SelectedIndex = (int)_criminal.ColorOfHair;
             ChangeCriminalFlyout_SexComboBox.SelectedIndex = (int)_criminal.Sex;
-            ChangeCriminalFlyout_CitizenshipComboBox.SelectedIndex = _criminal.Citizenship.Id;
-            ChangeCriminalFlyout_BirthCountryComboBox.SelectedIndex = _criminal.BirthCountry.Id;
+            ChangeCriminalFlyout_CitizenshipComboBox.SelectedIndex = (int)_criminal.Citizenship;
+            ChangeCriminalFlyout_BirthCountryComboBox.SelectedIndex = (int)_criminal.BirthCountry;
             ChangeCriminalFlyout_BirthplaceTextBox.Text = _criminal.Birthplace;
             ChangeCriminalFlyout_BirthdateDatePicker.SelectedDate = _criminal.Birthdate;
-            ChangeCriminalFlyout_LastLivingCountryComboBox.SelectedIndex = _criminal.LastLivingCountry.Id;
+            ChangeCriminalFlyout_LastLivingCountryComboBox.SelectedIndex = (int)_criminal.LastLivingCountry;
             ChangeCriminalFlyout_LastLivingPlaceTextBox.Text = _criminal.LastLivingPlace;
             ChangeCriminalFlyout_CurrentStateComboBox.SelectedIndex = (int)_criminal.State;
             ChangeCriminalFlyout_SpecialSignsTextBox.Text = _criminal.SpecialSigns;
             foreach (var language in _criminal.Languages)
-                ChangeCriminalFlyout_LanguagesListBox.SelectedItems.Add(ChangeCriminalFlyout_LanguagesListBox.Items[language.Id]);
+                ChangeCriminalFlyout_LanguagesListBox.SelectedItems.Add(ChangeCriminalFlyout_LanguagesListBox.Items[(int)language]);
             foreach (var charge in _criminal.Charges)
-                ChangeCriminalFlyout_ChargesListBox.SelectedItems.Add(ChangeCriminalFlyout_ChargesListBox.Items[charge.Id]);
+                ChangeCriminalFlyout_ChargesListBox.SelectedItems.Add(ChangeCriminalFlyout_ChargesListBox.Items[(int)charge]);
             if (_criminal.CriminalGroupMembership == null) return;
             for (int i = 0; i < Database.CriminalGroups.Values.Count; i++)
             {
@@ -147,17 +149,24 @@ namespace InterpolDatabaseProject
 
         private void SetDataSources()
         {
-            ChangeCriminalFlyout_EyeColorComboBox.ItemsSource = EyeColor.EyeColors;
-            ChangeCriminalFlyout_HairColorComboBox.ItemsSource = HairColor.HairColors;
+            ChangeCriminalFlyout_EyeColorComboBox.ItemsSource =
+                Enum.GetValues(typeof(Сriminal.EyeColor)).Cast<Сriminal.EyeColor>();
+            ChangeCriminalFlyout_HairColorComboBox.ItemsSource =
+                Enum.GetValues(typeof(Сriminal.HairColor)).Cast<Сriminal.HairColor>();
             ChangeCriminalFlyout_SexComboBox.ItemsSource =
                 Enum.GetValues(typeof(Сriminal.SexOptions)).Cast<Сriminal.SexOptions>();
-            ChangeCriminalFlyout_CitizenshipComboBox.ItemsSource = Country.Countries;
-            ChangeCriminalFlyout_BirthCountryComboBox.ItemsSource = Country.Countries;
-            ChangeCriminalFlyout_LastLivingCountryComboBox.ItemsSource = Country.Countries;
+            ChangeCriminalFlyout_CitizenshipComboBox.ItemsSource =
+                Enum.GetValues(typeof(Сriminal.Country)).Cast<Сriminal.Country>();
+            ChangeCriminalFlyout_BirthCountryComboBox.ItemsSource =
+                Enum.GetValues(typeof(Сriminal.Country)).Cast<Сriminal.Country>();
+            ChangeCriminalFlyout_LastLivingCountryComboBox.ItemsSource =
+                Enum.GetValues(typeof(Сriminal.Country)).Cast<Сriminal.Country>();
             ChangeCriminalFlyout_CurrentStateComboBox.ItemsSource =
                 Enum.GetValues(typeof(Сriminal.CriminalStateOptions)).Cast<Сriminal.CriminalStateOptions>();
-            ChangeCriminalFlyout_LanguagesListBox.ItemsSource = Model.Language.Languages;
-            ChangeCriminalFlyout_ChargesListBox.ItemsSource = Crime.Crimes;
+            ChangeCriminalFlyout_LanguagesListBox.ItemsSource =
+                Enum.GetValues(typeof(Сriminal.Language)).Cast<Сriminal.Language>();
+            ChangeCriminalFlyout_ChargesListBox.ItemsSource =
+                Enum.GetValues(typeof(Сriminal.Crime)).Cast<Сriminal.Crime>();
             ChangeCriminalFlyout_CriminalGroupComboBox.ItemsSource = Database.CriminalGroups;
         }
 

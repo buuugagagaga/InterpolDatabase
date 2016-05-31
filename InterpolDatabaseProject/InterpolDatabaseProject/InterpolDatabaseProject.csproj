@@ -78,7 +78,6 @@
     <Compile Include="CriminalProfile.xaml.cs">
       <DependentUpon>CriminalProfile.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Crime.cs" />
     <Compile Include="Model\Criminal.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -86,12 +85,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Country.cs" />
     <Compile Include="Model\CriminalGroup.cs" />
     <Compile Include="Model\Database.cs" />
-    <Compile Include="Model\EyeColor.cs" />
-    <Compile Include="Model\HairColor.cs" />
-    <Compile Include="Model\Language.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -115,11 +110,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Storage\AdditionalData\countries.dat" />
-    <None Include="Storage\AdditionalData\crimes.dat" />
-    <None Include="Storage\AdditionalData\eyecolors.dat" />
-    <None Include="Storage\AdditionalData\haircolors.dat" />
-    <None Include="Storage\AdditionalData\languages.dat" />
     <None Include="Storage\Data\criminalGroups.dat" />
     <None Include="Storage\Data\criminals.dat" />
   </ItemGroup>
