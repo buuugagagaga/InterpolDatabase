@@ -16,7 +16,7 @@ namespace InterpolDatabaseProject.Model
         #region Properties
         #region _public
         /// <summary>
-        /// Коллекция преступников. Только для чтения.
+        /// Коллекция преступников. Только для чтения
         /// </summary>
         public static ReadOnlyDictionary<int, Сriminal> Criminals => new ReadOnlyDictionary<int, Сriminal>(_criminals);
 
@@ -45,7 +45,7 @@ namespace InterpolDatabaseProject.Model
 
         }
         /// <summary>
-        /// Метод для восстановления данных данных.
+        /// Метод для восстановления данных
         /// </summary>
         public static void RestoreData()
         {

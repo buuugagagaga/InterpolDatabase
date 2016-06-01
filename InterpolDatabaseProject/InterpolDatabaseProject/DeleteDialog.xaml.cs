@@ -16,7 +16,7 @@ namespace InterpolDatabaseProject
         #endregion
         #region Constructors
         /// <summary>
-        /// Основной конструкторв
+        /// Основной конструктор
         /// </summary>
         public DeleteDialog()
         {

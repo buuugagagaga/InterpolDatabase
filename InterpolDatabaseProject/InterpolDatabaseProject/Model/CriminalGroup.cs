@@ -10,7 +10,7 @@ namespace InterpolDatabaseProject.Model
     {
         #region Fields
         /// <summary>
-        /// Отображает последний использованый для группировки ID 
+        /// Отображает последний использованный для группировки ID 
         /// </summary>
         private static int _lastId = -1;
         #endregion

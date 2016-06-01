@@ -111,7 +111,7 @@ namespace InterpolDatabaseProject
         }
 
         /// <summary>
-        /// Устанавливает источники неизменяемый в программе данных для соответствующих элементов управления
+        /// Устанавливает источники неизменяемых в программе данных для соответствующих элементов управления
         /// </summary>
         private void SetDataSources()
         {
@@ -242,7 +242,7 @@ namespace InterpolDatabaseProject
 
         /// <summary>
         /// Обработчик события Click для CriminalActions_AddCriminalButton.
-        /// Вызывает функцию очистки AddCriminalFlyout и отображает пользователю поля для ввода данных о преступника 
+        /// Вызывает функцию очистки AddCriminalFlyout и отображает пользователю поля для ввода данных о преступнике 
         /// </summary>
         private void CriminalActions_AddCriminalButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -318,7 +318,7 @@ namespace InterpolDatabaseProject
 
         /// <summary>
         /// Обработчик события SelectionChanged для CriminalGroupsListBox
-        /// Отображает/скрывает данные группировке и разблокирует/блокирует кнопку удаления
+        /// Отображает/скрывает данные о группировке и разблокирует/блокирует кнопку удаления
         /// </summary>
         private void CriminalGroupsListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -621,7 +621,7 @@ namespace InterpolDatabaseProject
             => result.Where(r => r.Age == null).ToList();
 
         /// <summary>
-        /// Фильтрация по диапазону ростов преступника (если рост известен)
+        /// Фильтрация по диапазону роста преступника (если рост известен)
         /// </summary>
         /// <param name="result">Результат предыдущих фильтраций</param>
         /// <param name="lowerValue">Начальный рост</param>
@@ -631,7 +631,7 @@ namespace InterpolDatabaseProject
             => result.Where(r => r.Height >= lowerValue && r.Height <= upperValue).ToList();
 
         /// <summary>
-        /// Фильтрация по диапазону ростов преступника (если рост неизвестен)
+        /// Фильтрация по диапазону роста преступника (если рост неизвестен)
         /// </summary>
         /// <param name="result">Результат предыдущих фильтраций</param>
         /// <returns>Отфильтрованная коллекция преступников</returns>

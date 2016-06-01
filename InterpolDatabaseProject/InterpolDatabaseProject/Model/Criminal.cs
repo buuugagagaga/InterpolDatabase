@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
 namespace InterpolDatabaseProject.Model
@@ -93,7 +92,7 @@ namespace InterpolDatabaseProject.Model
     {
         #region Fields
         /// <summary>
-        /// Отображает последний использованый для преступника ID
+        /// Отображает последний использованный для преступника ID
         /// </summary>
         public static int LastId { get; private set; } = -1;
         #endregion
@@ -293,7 +292,7 @@ namespace InterpolDatabaseProject.Model
         #endregion
         #region Methods
         /// <summary>
-        /// Метод, для установления членства в преступной группировке.
+        /// Метод для установления членства в преступной группировке.
         /// Необходим для синхронизации коллекции членов группировки 
         /// и свойства CriminalGroupMembership
         /// </summary>
@@ -306,7 +305,7 @@ namespace InterpolDatabaseProject.Model
         }
 
         /// <summary>
-        /// Метод, для удаления членства в преступной группировке.
+        /// Метод для удаления членства в преступной группировке.
         /// Необходим для синхронизации коллекции членов группировки 
         /// и свойства CriminalGroupMembership
         /// </summary>
