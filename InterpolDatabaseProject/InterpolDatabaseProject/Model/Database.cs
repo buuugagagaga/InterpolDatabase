@@ -18,16 +18,20 @@ namespace InterpolDatabaseProject.Model
         /// <summary>
         /// Коллекция преступников. Только для чтения
         /// </summary>
-        public static ReadOnlyDictionary<int, Сriminal> Criminals => new ReadOnlyDictionary<int, Сriminal>(_criminals);
+        public static ReadOnlyDictionary<int, Сriminal> Criminals 
+            => new ReadOnlyDictionary<int, Сriminal>(_criminals);
 
         /// <summary>
         /// Коллекция группировок. Только для чтения
         /// </summary>
-        public static ReadOnlyDictionary<int, CriminalGroup> CriminalGroups => new ReadOnlyDictionary<int, CriminalGroup>(_criminalGroups);
+        public static ReadOnlyDictionary<int, CriminalGroup> CriminalGroups 
+            => new ReadOnlyDictionary<int, CriminalGroup>(_criminalGroups);
         #endregion
         #region _private
-        private static Dictionary<int, Сriminal> _criminals = new Dictionary<int, Сriminal>();
-        private static Dictionary<int, CriminalGroup> _criminalGroups = new Dictionary<int, CriminalGroup>();
+        private static Dictionary<int, Сriminal> _criminals = 
+            new Dictionary<int, Сriminal>();
+        private static Dictionary<int, CriminalGroup> _criminalGroups = 
+            new Dictionary<int, CriminalGroup>();
         #endregion
         #endregion
         #region Methods
@@ -38,9 +42,11 @@ namespace InterpolDatabaseProject.Model
         public static void SaveData()
         {
             BinaryFormatter binFormat = new BinaryFormatter();
-            using (Stream stream = new FileStream("../../Storage/Data/criminals.dat", FileMode.Create, FileAccess.Write, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/criminals.dat", 
+                FileMode.Create, FileAccess.Write, FileShare.None))
                 binFormat.Serialize(stream, _criminals);
-            using (Stream stream = new FileStream("../../Storage/Data/criminalGroups.dat", FileMode.Create, FileAccess.Write, FileShare.None))
+            using (Stream stream = new FileStream("../../Storage/Data/criminalGroups.dat", 
+                FileMode.Create, FileAccess.Write, FileShare.None))
                 binFormat.Serialize(stream, _criminalGroups);
 
         }
@@ -50,16 +56,21 @@ namespace InterpolDatabaseProject.Model
         public static void RestoreData()
         {
             BinaryFormatter binFormat = new BinaryFormatter();
-            using (Stream stream = new FileStream("../../Storage/Data/criminalGroups.dat", FileMode.Open, FileAccess.Read, FileShare.None))
-                _criminalGroups = (Dictionary<int, CriminalGroup>)binFormat.Deserialize(stream);
-            using (Stream stream = new FileStream("../../Storage/Data/criminals.dat", FileMode.Open, FileAccess.Read, FileShare.None))
-                _criminals = (Dictionary<int, Сriminal>)binFormat.Deserialize(stream);
+            using (Stream stream = new FileStream("../../Storage/Data/criminalGroups.dat", 
+                FileMode.Open, FileAccess.Read, FileShare.None))
+                _criminalGroups = (Dictionary<int, 
+                    CriminalGroup>)binFormat.Deserialize(stream);
+            using (Stream stream = new FileStream("../../Storage/Data/criminals.dat", 
+                FileMode.Open, FileAccess.Read, FileShare.None))
+                _criminals = (Dictionary<int, 
+                    Сriminal>)binFormat.Deserialize(stream);
 
             //Cвязывание преступных группировок с преступниками
             foreach (var criminal in Criminals)
             {
                 if(criminal.Value.CriminalGroupMembership!=null)
-                    criminal.Value.SetCriminalGroup(CriminalGroups[criminal.Value.CriminalGroupMembership.Id]);
+                    criminal.Value.SetCriminalGroup(
+                        CriminalGroups[criminal.Value.CriminalGroupMembership.Id]);
             }
         }
         #endregion

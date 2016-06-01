@@ -116,11 +116,14 @@ namespace InterpolDatabaseProject.Model
             BirthCountry = (Country)info.GetValue("BirthCountry", typeof(Country));
             Birthplace = info.GetString("Birthplace");
             Birthdate = (DateTime?)info.GetValue("Birthdate", typeof(DateTime?));
-            LastLivingCountry = (Country)info.GetValue("LastLivingCountry", typeof(Country));
+            LastLivingCountry = (Country)info.GetValue("LastLivingCountry",
+                typeof(Country));
             LastLivingPlace = info.GetString("LastLivingPlace");
             Languages = (List<Language>)info.GetValue("Languages", typeof(List<Language>));
-            State = (CriminalStateOptions)info.GetValue("State", typeof(CriminalStateOptions));
-            CriminalGroupMembership = (CriminalGroup)info.GetValue("CriminalGroupMembership", typeof(CriminalGroup));
+            State = (CriminalStateOptions)info.GetValue("State",
+                typeof(CriminalStateOptions));
+            CriminalGroupMembership = (CriminalGroup)info.GetValue("CriminalGroupMembership",
+                typeof(CriminalGroup));
             PhotoFileName = info.GetString("PhotoFileName");
             Charges = (List<Crime>)info.GetValue("Charges", typeof(List<Crime>));
         }
@@ -135,13 +138,16 @@ namespace InterpolDatabaseProject.Model
         /// <param name="colorOfEye">Цвет глаз преступника</param>
         /// <param name="colorOfHair">Цвет волос преступника</param>
         /// <param name="sex">Пол преступника</param>
-        /// <param name="specialSigns">Особые приметы преступника, дополнительные данные</param>
+        /// <param name="specialSigns">Особые приметы преступника, 
+        /// дополнительные данные</param>
         /// <param name="citizenship">Гражданство преступника</param>
         /// <param name="birthCountry">Страна рождения преступника</param>
         /// <param name="birthplace">Место рождения преступника</param>
         /// <param name="birthdate">Дата рождения преступника</param>
-        /// <param name="lastLivingCountry">Последняя зарегистрированная страна проживания преступника</param>
-        /// <param name="lastLivingPlace">Последнее зарегистрированное место проживания преступника</param>
+        /// <param name="lastLivingCountry">Последняя зарегистрированная страна
+        ///  проживания преступника</param>
+        /// <param name="lastLivingPlace">Последнее зарегистрированное место
+        ///  проживания преступника</param>
         /// <param name="languages">Языки, которыми владеет преступник</param>
         /// <param name="state">Текущее состояние преступника</param>
         /// <param name="photoFileName">Название файла с фотографией преступника</param>
@@ -149,8 +155,9 @@ namespace InterpolDatabaseProject.Model
         /// <param name="charges">Преступления, в которых обвиняется преступник</param>
         public Сriminal(string lastname, string forename, string codeName, int? height,
             EyeColor colorOfEye, HairColor colorOfHair, SexOptions sex, string specialSigns,
-            Country citizenship, Country birthCountry, string birthplace, DateTime? birthdate,
-            Country lastLivingCountry, string lastLivingPlace, List<Language> languages, CriminalStateOptions state, string photoFileName,
+            Country citizenship, Country birthCountry, string birthplace,
+            DateTime? birthdate, Country lastLivingCountry, string lastLivingPlace,
+            List<Language> languages, CriminalStateOptions state, string photoFileName,
             CriminalGroup criminalGroup, List<Crime> charges)
         {
             Id = ++LastId;
@@ -177,7 +184,7 @@ namespace InterpolDatabaseProject.Model
         }
         #endregion
         #region Properies
-       
+
         /// <summary>
         /// Уникальный номер преступника
         /// </summary>
@@ -187,7 +194,7 @@ namespace InterpolDatabaseProject.Model
         /// Фамилия преступника
         /// </summary>
         public string Lastname { get; set; }
-        
+
         /// <summary>
         /// Имя преступника
         /// </summary>
@@ -202,12 +209,12 @@ namespace InterpolDatabaseProject.Model
         /// Рост преступника
         /// </summary>
         public int? Height { get; set; }
-        
+
         /// <summary>
         /// Цвет глаз преступника
         /// </summary>
         public EyeColor ColorOfEye { get; set; }
-        
+
         /// <summary>
         /// Цвет волос преступника
         /// </summary>
@@ -227,7 +234,7 @@ namespace InterpolDatabaseProject.Model
         /// Гражданство преступника
         /// </summary>
         public Country Citizenship { get; set; }
-        
+
         /// <summary>
         /// Страна рождения преступника
         /// </summary>
@@ -296,8 +303,10 @@ namespace InterpolDatabaseProject.Model
         /// Необходим для синхронизации коллекции членов группировки 
         /// и свойства CriminalGroupMembership
         /// </summary>
-        /// <param name="criminalGroup">Группировка, членом которой является преступник</param>
-        public void SetCriminalGroup(CriminalGroup criminalGroup) {
+        /// <param name="criminalGroup">Группировка, членом которой 
+        /// является преступник</param>
+        public void SetCriminalGroup(CriminalGroup criminalGroup)
+        {
             if (CriminalGroupMembership != null) CriminalGroupMembership = null;
             if (!criminalGroup.Members.ContainsKey(Id))
                 criminalGroup.AddMember(this);
@@ -311,7 +320,7 @@ namespace InterpolDatabaseProject.Model
         /// </summary>
         public void UnsetCriminalGroup()
         {
-            if (CriminalGroupMembership==null) return;
+            if (CriminalGroupMembership == null) return;
             if (CriminalGroupMembership.Members.ContainsKey(Id))
                 CriminalGroupMembership.RemoveMember(Id);
             else CriminalGroupMembership = null;
@@ -341,7 +350,8 @@ namespace InterpolDatabaseProject.Model
             info.AddValue("LastLivingPlace", LastLivingPlace, typeof(string));
             info.AddValue("Languages", Languages, typeof(List<Language>));
             info.AddValue("State", State, typeof(CriminalStateOptions));
-            info.AddValue("CriminalGroupMembership", CriminalGroupMembership, typeof(CriminalGroup));
+            info.AddValue("CriminalGroupMembership", CriminalGroupMembership,
+                typeof(CriminalGroup));
             info.AddValue("PhotoFileName", PhotoFileName, typeof(string));
             info.AddValue("Charges", Charges, typeof(List<Crime>));
         }

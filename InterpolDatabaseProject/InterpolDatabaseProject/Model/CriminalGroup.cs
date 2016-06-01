@@ -57,8 +57,10 @@ namespace InterpolDatabaseProject.Model
         /// <summary>
         /// Коллекция членов группировки. Только для чтения
         /// </summary>
-        public ReadOnlyDictionary<int, Сriminal> Members => new ReadOnlyDictionary<int, Сriminal>(_members);
-        private readonly Dictionary<int, Сriminal> _members = new Dictionary<int, Сriminal>();
+        public ReadOnlyDictionary<int, Сriminal> Members 
+            => new ReadOnlyDictionary<int, Сriminal>(_members);
+        private readonly Dictionary<int, Сriminal> _members 
+            = new Dictionary<int, Сriminal>();
         #endregion
         #region Methods
         /// <summary>
